@@ -1,6 +1,8 @@
+'use strict';
 
 var express = require('express');
-var config = require('../config/config');
+var config = require('../config');
+var consolidate = require('consolidate');
 
 /**
  * Initialize local variables
@@ -22,7 +24,7 @@ module.exports.initLocalVariables = function (app) {
  */
 module.exports.initViewEngine = function (app) {
   // Set swig as the template engine
-  app.engine('server.view.html', config.templateEngine);
+  app.engine('server.view.html', consolidate[config.templateEngine]);
 
   // Set views path and view engine
   app.set('view engine', 'server.view.html');
@@ -34,5 +36,9 @@ module.exports.init = function (db) {
   var app = express();
 
   this.initViewEngine(app);
+
+  this.initLocalVariables(app);
+
+  return app;
 
 }

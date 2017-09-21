@@ -1,5 +1,7 @@
+'use strict';
+
 import { app, BrowserWindow } from 'electron';
-var server = require('./server');
+var server = require('./src/server');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

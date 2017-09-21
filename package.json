@@ -48,10 +48,12 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "consolidate": "^0.14.5",
     "electron-compile": "^6.4.2",
-    "express": "^4.15.4",
+    "express": "^4.13.1",
     "mongoose": "^4.11.12",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "yarn": "^1.0.2"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

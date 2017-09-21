@@ -1,10 +1,10 @@
 
-module.exports.config = {
+module.exports = {
 	server: {
 		port: 3000
 	},
 	db: {
-		uri: 'mongodb//localhost',
+		uri: 'mongodb://localhost',
 		options: {
 			user: '',
 			password: ''

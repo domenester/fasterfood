@@ -1,8 +1,10 @@
+'use strict';
+
 var express = require('./config/lib/express');
 var config = require('./config/config');
 var mongoose = require('./config/lib/mongoose');
 
-module.exports.init = cb => {
+module.exports.init = function init(cb) {
 	mongoose.connect(function (db) {
 		// Initialize express
 		var app = express.init(db);
@@ -10,10 +12,10 @@ module.exports.init = cb => {
 	});
 };
 
-module.exports.start = cb => {
+module.exports.start = function start(cb) {
 	var _this = this;
 
-	_this.init( (app, db, config) => {
+	this.init( (app, db, config) => {
 		// Start the app by listening on <port>
 		app.listen(config.server.port, () => {
 
@@ -26,11 +28,11 @@ module.exports.start = cb => {
 	});
 };
 
-module.exports.start = callback => {
-	server.get('/', function(request, response){
-		response.send("Hello!");
-	});
-	server.listen(3000);
+// module.exports.start = callback => {
+// 	server.get('/', function(request, response){
+// 		response.send("Hello!");
+// 	});
+// 	server.listen(3000);
 
-	if(callback) callback();
-};
+// 	if(callback) callback();
+// };
