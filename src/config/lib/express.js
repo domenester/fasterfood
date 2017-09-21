@@ -3,6 +3,33 @@
 var express = require('express');
 var config = require('../config');
 var consolidate = require('consolidate');
+var path = require('path');
+
+/**
+ * Configure the modules static routes
+ */
+module.exports.initModulesClientRoutes = function (app) {
+  // Setting the app router and static folder
+  let fullPath = path.resolve('./src/public');
+  console.log('fullPath: ' + fullPath);
+  app.use('/', express.static(path.resolve('./public')));
+
+  // // Globbing static routing
+  // config.folders.client.forEach(function (staticPath) {
+  //   app.use(staticPath, express.static(path.resolve('./' + staticPath)));
+  // });
+};
+
+/**
+ * Configure the modules server routes
+ */
+module.exports.initModulesServerRoutes = function (app) {
+  // Globbing routing files
+  console.log('Config Stringigied: ' + JSON.stringify(config));
+  config.files.server.routes.forEach(function (routePath) {
+    require(path.resolve(routePath))(app);
+  });
+};
 
 /**
  * Initialize local variables
@@ -38,6 +65,10 @@ module.exports.init = function (db) {
   this.initViewEngine(app);
 
   this.initLocalVariables(app);
+
+  this.initModulesClientRoutes(app);
+
+  this.initModulesServerRoutes(app);
 
   return app;
 

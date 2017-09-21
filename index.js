@@ -1,6 +1,7 @@
 'use strict';
 
 import { app, BrowserWindow } from 'electron';
+console.log(JSON.stringify(app));
 var server = require('./src/server');
 
 // Keep a global reference of the window object, if you don't, the window will

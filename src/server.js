@@ -13,14 +13,13 @@ module.exports.init = function init(cb) {
 };
 
 module.exports.start = function start(cb) {
-	var _this = this;
 
 	this.init( (app, db, config) => {
 		// Start the app by listening on <port>
-		app.listen(config.server.port, () => {
+		app.listen(config.port, () => {
 
 		// Logging initialization
-		console.log('listening on ' + config.server.port);
+		console.log('listening on ' + config.port);
 
 		if (cb) cb();
 
