@@ -10,8 +10,6 @@ var path = require('path');
  */
 module.exports.initModulesClientRoutes = function (app) {
   // Setting the app router and static folder
-  let fullPath = path.resolve('./src/public');
-  console.log('fullPath: ' + fullPath);
   app.use('/', express.static(path.resolve('./public')));
 
   // // Globbing static routing
@@ -55,7 +53,7 @@ module.exports.initViewEngine = function (app) {
 
   // Set views path and view engine
   app.set('view engine', 'server.view.html');
-  app.set('views', './');
+  app.set('views', './src');
 };
 
 module.exports.init = function (db) {

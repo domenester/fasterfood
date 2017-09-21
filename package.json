@@ -1,55 +1,16 @@
 {
-  "name": "my-test",
-  "productName": "my-test",
-  "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint src --color"
-  },
-  "keywords": [],
-  "author": "diogo.domene",
+  "name": "faster-food",
+  "version": "0.1.0",
+  "main": "index.js",
+  "private": false,
+  "author": "Diogo Domene",
   "license": "MIT",
-  "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
-        "linux": [
-          "deb",
-          "rpm"
-        ]
-      },
-      "electronPackagerConfig": {
-        "packageManager": "npm"
-      },
-      "electronWinstallerConfig": {
-        "name": "electron_forge_test"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "",
-        "name": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
-        "name": "electronforgetest"
-      }
-    }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/domenester/fasterfood.git"
   },
   "dependencies": {
-    "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "chalk": "^2.1.0",
+	  "chalk": "^2.1.0",
     "consolidate": "^0.14.5",
     "electron-compile": "^6.4.2",
     "express": "^4.13.1",
@@ -57,18 +18,6 @@
     "lodash": "^3.10.0",
     "mongoose": "^4.11.12",
     "swig": "^1.4.2",
-    "yarn": "^1.0.2"
-  },
-  "devDependencies": {
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
-    "electron-forge": "^4.0.2",
-    "electron-prebuilt-compile": "1.7.6",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.3.0"
+    "electron": "^1.7.6"
   }
 }

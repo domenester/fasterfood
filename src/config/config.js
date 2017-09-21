@@ -6,7 +6,7 @@
 var _ = require('lodash'),
   chalk = require('chalk'),
   glob = require('glob'),
-  fs = require('fs'),
+  //fs = require('fs'),
   path = require('path');
 
 /**
