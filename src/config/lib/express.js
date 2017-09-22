@@ -4,13 +4,17 @@ var express = require('express');
 var config = require('../config');
 var consolidate = require('consolidate');
 var path = require('path');
+var pathRoot = '../../../';
+const {app} = require('electron');
+const electron = app;
 
 /**
  * Configure the modules static routes
  */
 module.exports.initModulesClientRoutes = function (app) {
   // Setting the app router and static folder
-  app.use('/', express.static(path.resolve('./public')));
+  //app.use('/', express.static(path.resolve('./public')));
+  //app.use('/', express.static( pathRoot + 'public'));
 
   // // Globbing static routing
   // config.folders.client.forEach(function (staticPath) {
@@ -24,9 +28,12 @@ module.exports.initModulesClientRoutes = function (app) {
 module.exports.initModulesServerRoutes = function (app) {
   // Globbing routing files
   console.log('Config Stringigied: ' + JSON.stringify(config));
-  config.files.server.routes.forEach(function (routePath) {
-    require(path.resolve(routePath))(app);
-  });
+  console.log('elec path: ' + electron.getAppPath());
+  require(electron.getAppPath() + "/src/modules/core/server/routes/core.server.routes.js")(app);
+  // config.files.server.routes.forEach(function (routePath) {
+  //   //require(path.resolve(routePath))(app);
+  //   require(pathRoot + routePath)(app);
+  // });
 };
 
 /**
@@ -53,7 +60,7 @@ module.exports.initViewEngine = function (app) {
 
   // Set views path and view engine
   app.set('view engine', 'server.view.html');
-  app.set('views', './src');
+  app.set('views', electron.getAppPath() + '/src');
 };
 
 module.exports.init = function (db) {

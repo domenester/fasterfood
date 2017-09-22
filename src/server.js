@@ -27,6 +27,7 @@ module.exports.start = function start(cb) {
 	});
 };
 
+
 // module.exports.start = callback => {
 // 	server.get('/', function(request, response){
 // 		response.send("Hello!");
@@ -35,3 +36,13 @@ module.exports.start = function start(cb) {
 
 // 	if(callback) callback();
 // };
+
+// module.exports.start = function start(cb){
+// 	var express = require('express');
+// 	var app = express();
+// 	app.get('/', function (req, res) { 
+// 		res.send('Hello World') 
+// 	});
+// 	app.listen(3000);
+// 	cb();
+// }

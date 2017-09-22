@@ -1,6 +1,8 @@
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
+'use strict';
+
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const url = require('url');
 var server = require('./src/server');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,7 +23,7 @@ function createWindow () {
     win.loadURL('http://localhost:3000');
   });
   // Open the DevTools.
- // win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {

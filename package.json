@@ -1,7 +1,8 @@
 {
   "name": "faster-food",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "./index.js",
+  "description": "A managment app",
   "private": false,
   "author": "Diogo Domene",
   "license": "MIT",
@@ -9,15 +10,32 @@
     "type": "git",
     "url": "https://github.com/domenester/fasterfood.git"
   },
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron ./app",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "yourappid",
+    "win": {
+      "target": "portable",
+      "icon": "build/skull.ico"
+    },
+    "electronCompile": false
+  },
   "dependencies": {
-	  "chalk": "^2.1.0",
+    "chalk": "^2.1.0",
     "consolidate": "^0.14.5",
     "electron-compile": "^6.4.2",
     "express": "^4.13.1",
     "glob": "^5.0.13",
     "lodash": "^3.10.0",
     "mongoose": "^4.11.12",
-    "swig": "^1.4.2",
-    "electron": "^1.7.6"
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "electron": "^1.7.6",
+    "electron-builder": "^19.29.1"
   }
 }

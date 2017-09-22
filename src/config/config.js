@@ -9,6 +9,9 @@ var _ = require('lodash'),
   //fs = require('fs'),
   path = require('path');
 
+const { app } = require('electron');
+const electron = app;
+
 /**
  * Get files by glob patterns
  */
@@ -61,9 +64,9 @@ var initGlobalConfigFiles = (config, assets) => {
 
 var initGlobalConfig = () => {
 	// Get the default assets
-	var assets = require(path.join(process.cwd(), 'src/config/assets/default'));
+  var assets = require(path.join( electron.getAppPath(), '/src/config/assets/default'));
 	// Get the default config
-	var config = require(path.join(process.cwd(), 'src/config/env/default'));
+	var config = require(path.join( electron.getAppPath(), '/src/config/env/default'));
 	// Initialize global globbed files
 	initGlobalConfigFiles(config, assets);
 
