@@ -2,10 +2,10 @@
 
 var express = require('./config/lib/express');
 var config = require('./config/config');
-var mongoose = require('./config/lib/mongoose');
+var tingodb = require('./config/lib/tingodb');
 
 module.exports.init = function init(cb) {
-	mongoose.connect(function (db) {
+	tingodb.connect(function (db) {
 		// Initialize express
 		var app = express.init(db);
 		if (cb) cb(app, db, config);
@@ -16,6 +16,14 @@ module.exports.start = function start(cb) {
 
 	this.init( (app, db, config) => {
 		// Start the app by listening on <port>
+
+		db.insert([{hello:'world_safe1'}, {hello:'world_safe2'}], {w:1}, function(err, result) {			
+			// Fetch the document 
+			db.findOne({hello:'world_safe2'}, function(err, item) {
+				console.log("item.hello: " + item.hello);
+			})
+		});
+
 		app.listen(config.port, () => {
 
 		// Logging initialization
