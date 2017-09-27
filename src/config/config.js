@@ -10,7 +10,7 @@ var _ = require('lodash'),
   path = require('path');
 
 const { app } = require('electron');
-const electron = app;
+let appPath = app.getAppPath();
 
 /**
  * Get files by glob patterns
@@ -51,6 +51,22 @@ var getGlobbedPaths = function (globPatterns, excludes) {
   return output;
 };
 
+/**
+ * Initialize global configuration files
+ */
+var initGlobalConfigFolders = function (config, assets) {
+  // Appending files
+  config.folders = {
+    server: {},
+    client: {}
+  };
+  console.log('processCwd: ' + process.cwd());
+  console.log('appPath: ' + appPath);
+  console.log('appPathReplace: ' + appPath);
+  // Setting globbed client paths
+  config.folders.client = getGlobbedPaths( appPath + '/src/modules/*/client/', appPath.replace(new RegExp(/\\/g), '/'));
+};
+
 var initGlobalConfigFiles = (config, assets) => {
 	// Appending files
 	config.files = {
@@ -60,15 +76,23 @@ var initGlobalConfigFiles = (config, assets) => {
 
 	// Setting Globbed route files
 	config.files.server.routes = getGlobbedPaths(assets.server.routes);
+  // Setting Globbed js files
+  config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'src/public/').concat(getGlobbedPaths(assets.client.js, ['src/public/']));
+  // Setting Globbed css files
+  config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'src/public/').concat(getGlobbedPaths(assets.client.css, ['src/public/']));
 }
 
 var initGlobalConfig = () => {
 	// Get the default assets
-  var assets = require(path.join( electron.getAppPath(), '/src/config/assets/default'));
+  var assets = require(path.join( appPath, '/src/config/assets/default'));
 	// Get the default config
-	var config = require(path.join( electron.getAppPath(), '/src/config/env/default'));
+	var config = require(path.join( appPath, '/src/config/env/default'));
 	// Initialize global globbed files
 	initGlobalConfigFiles(config, assets);
+  // Initialize global globbed folders
+  initGlobalConfigFolders(config, assets);
+
+  console.log('config file: '+JSON.stringify(config));
 
 	return config;
 }

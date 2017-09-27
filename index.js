@@ -27,8 +27,15 @@ function createWindow () {
   win = new BrowserWindow({width: 800, height: 600})
 
   //Starting the server, then loads the localhost;
-  server.start( () => {
-    win.loadURL('http://localhost:3000');
+  server.start( (admin) => {
+    console.log('admin: ' + admin);
+    if(admin) {
+      win.loadURL('http://localhost:3001');
+    } else {
+      console.log('going to register');
+      win.loadURL('http://localhost:3001');
+    }
+    
   });
 
   // Emitted when the window is closed.

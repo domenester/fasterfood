@@ -4,34 +4,32 @@ var express = require('./config/lib/express');
 var config = require('./config/config');
 var tingodb = require('./config/lib/tingodb');
 
+module.exports.checkAdmin = function checkAdmin(usersCollection, callback) {
+	usersCollection.findOne({roles: 'admin'}, function(err, item) {
+		if (err) {
+			throw new Error(err);
+		}
+		callback(item);
+	});	
+};
+
 module.exports.init = function init(cb) {
-	tingodb.connect(function (db) {
+	tingodb.getCollection('users', function (usersCollection) {
 		// Initialize express
-		var app = express.init(db);
-		if (cb) cb(app, db, config);
+		var app = express.init(usersCollection);
+		
+		if (cb) cb(app, usersCollection);
 	});
 };
 
 module.exports.start = function start(cb) {
 
-	this.init( (app, db, config) => {
-		// Start the app by listening on <port>
-
-		db.insert([{hello:'world_safe1'}, {hello:'world_safe2'}], {w:1}, function(err, result) {			
-			// Fetch the document 
-			db.findOne({hello:'world_safe2'}, function(err, item) {
-				console.log("item.hello: " + item.hello);
-			})
-		});
-
+	this.init( (app, usersCollection) => {		
 		app.listen(config.port, () => {
-
-		// Logging initialization
-		console.log('listening on ' + config.port);
-
-		if (cb) cb();
-
-		});
+			// Logging initialization
+			console.log('listening on ' + config.port);
+			this.checkAdmin(usersCollection, cb);
+		});			
 	});
 };
 

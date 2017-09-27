@@ -9,19 +9,18 @@ const electron = app;
 var tingodb = tingoDb().Db;
 
 // Initialize Mongoose
-module.exports.connect = function (cb) {
+module.exports.getCollection = function (name, cb) {
 
-  var tingo = new tingodb(electron.getAppPath(), {});
-  
-  var db = tingo.collection(config.db.path + "/batch_document_insert_collection_safe", function (err) {
+  var tingo = new tingodb(config.db.connectionPath, {});
+  var usersCollection = tingo.collection(config.db.path + "/" + name, function (err) {
     // Log Error
     if (err) {
       console.error(chalk.red('Could not connect to TingoDB!'));
       console.log(err);
     } else {
       // Call callback FN
-      console.log(chalk.green('Connected to collection: ' + "batch_document_insert_collection_safe"));
-      if (cb) cb(db);
+      console.log(chalk.green('Connected to collection: ' + name));
+      if (cb) cb(usersCollection);
     }
   });
 };

@@ -4,21 +4,21 @@ module.exports = {
   client: {
     lib: {
       css: [
-        'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/bootstrap/dist/css/bootstrap-theme.css'
+        'src/public/lib/bootstrap/dist/css/bootstrap.css',
+        'src/public/lib/bootstrap/dist/css/bootstrap-theme.css'
       ],
       js: [
-        'public/lib/angular/angular.js',
-        'public/lib/angular-resource/angular-resource.js',
-        'public/lib/angular-animate/angular-animate.js',
-        'public/lib/angular-messages/angular-messages.js',
-        'public/lib/angular-ui-router/release/angular-ui-router.js',
-        'public/lib/angular-ui-utils/ui-utils.js',
-        'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-        'public/lib/angular-file-upload/angular-file-upload.js',
-        'public/lib/owasp-password-strength-test/owasp-password-strength-test.js'
+        'src/public/lib/angular/angular.js',
+        'src/public/lib/angular-resource/angular-resource.js',
+        'src/public/lib/angular-animate/angular-animate.js',
+        'src/public/lib/angular-messages/angular-messages.js',
+        'src/public/lib/angular-ui-router/release/angular-ui-router.js',
+        'src/public/lib/angular-ui-utils/ui-utils.js',
+        'src/public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+        'src/public/lib/angular-file-upload/angular-file-upload.js',
+        'src/public/lib/owasp-password-strength-test/owasp-password-strength-test.js'
       ],
-      tests: ['public/lib/angular-mocks/angular-mocks.js']
+      tests: ['src/public/lib/angular-mocks/angular-mocks.js']
     },
     css: [
       'src/modules/*/client/css/*.css'
@@ -36,12 +36,12 @@ module.exports = {
       'src/modules/*/client/**/*.js'
     ],
     views: ['src/modules/*/client/views/**/*.html'],
-    templates: ['build/templates.js']
+    templates: ['src/build/templates.js']
   },
   server: {
     gruntConfig: 'gruntfile.js',
     gulpConfig: 'gulpfile.js',
-    allJS: ['server.js', 'config/**/*.js', 'src/modules/*/server/**/*.js'],
+    allJS: ['src/server.js', 'src/config/**/*.js', 'src/modules/*/server/**/*.js'],
     models: 'src/modules/*/server/models/**/*.js',
     routes: ['src/modules/!(core)/server/routes/**/*.js', 'src/modules/core/server/routes/**/*.js'],
     sockets: 'src/modules/*/server/sockets/**/*.js',
