@@ -1,0 +1,11 @@
+{
+  "node": true, // Enable globals available when code is running inside of the NodeJS runtime environment.
+  "strict": true, // Require `use strict` pragma in every file.
+  "browser": true, // Standard browser globals e.g. `window`, `document`.
+  "globals": { // Globals variables.
+    "angular": true,
+    "ApplicationConfiguration": true
+  },
+  "esversion": 6, //Accept the new syntax (const, let, arrows...)
+  "devel": true // Allow development statements e.g. `console.log();`.
+}
