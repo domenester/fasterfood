@@ -7,7 +7,7 @@ angular.module('users').config(['$stateProvider',
     $stateProvider
       .state('user.register', {
         url: '/register',
-        templateUrl: 'modules/users/client/views/register.server.view.html',
+        templateUrl: 'src/modules/users/client/views/register.server.view.html',
 		controller: 'Register',
 		template: '<ui-view/>'
       });

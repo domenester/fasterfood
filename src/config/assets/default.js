@@ -30,10 +30,9 @@ module.exports = {
       'src/modules/*/client/scss/*.scss'
     ],
     js: [
-      'src/modules/core/client/app/config.js',
-      'src/modules/core/client/app/init.js',
       'src/modules/*/client/*.js',
-      'src/modules/*/client/**/*.js'
+      'src/modules/*/client/**/*.js',
+      'src/modules/*/client/*/*.js'
     ],
     views: ['src/modules/*/client/views/**/*.html'],
     templates: ['src/build/templates.js']

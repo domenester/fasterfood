@@ -8,7 +8,7 @@ angular.module('core').config(['$stateProvider',
     $stateProvider
     .state('home', {
       url: '/',
-      templateUrl: 'modules/core/client/views/home.client.view.html'
+      templateUrl: 'src/modules/core/client/views/home.client.view.html'
     });
   }
 ]);

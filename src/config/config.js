@@ -62,7 +62,7 @@ var initGlobalConfigFolders = function (config, assets) {
   };
   console.log('processCwd: ' + process.cwd());
   console.log('appPath: ' + appPath);
-  console.log('appPathReplace: ' + appPath);
+  console.log('appPathReplace: ' + appPath.replace(new RegExp(/\\/g), '/'));
   // Setting globbed client paths
   config.folders.client = getGlobbedPaths( appPath + '/src/modules/*/client/', appPath.replace(new RegExp(/\\/g), '/'));
 };
@@ -75,7 +75,9 @@ var initGlobalConfigFiles = (config, assets) => {
 	};
 
 	// Setting Globbed route files
-	config.files.server.routes = getGlobbedPaths(assets.server.routes);
+  config.files.server.routes = getGlobbedPaths(assets.server.routes);
+  // Setting Globbed config files
+  config.files.server.configs = getGlobbedPaths(assets.server.config);
   // Setting Globbed js files
   config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'src/public/').concat(getGlobbedPaths(assets.client.js, ['src/public/']));
   // Setting Globbed css files
