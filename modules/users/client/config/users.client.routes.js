@@ -1,14 +1,12 @@
 'use strict';
 // Setting up route
-angular.module('users').config(['$stateProvider',
-  function ($stateProvider) {
+angular.module('users').config(['$routeProvider',
+  function ($routeProvider) {
     // Users state routing
-    $stateProvider
-      .state('user.register', {
-        url: '/register',
+    $routeProvider
+      .when('/register', {
         templateUrl: 'modules/users/client/views/register.server.view.html',
-		controller: 'Register',
-		template: '<ui-view/>'
+		    controller: 'Register'
       });
   }
 ]);

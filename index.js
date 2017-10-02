@@ -33,7 +33,7 @@ function createWindow () {
       win.loadURL('http://localhost:3001');
     } else {
       console.log('going to register');
-      win.loadURL('http://localhost:3001');
+      win.loadURL('http://localhost:3001/register');
     }
     
   });

@@ -1,19 +1,16 @@
 'use strict';
 // Setting up route
-angular.module('core').config(['$stateProvider', '$urlRouterProvider',
-  function ($stateProvider, $urlRouterProvider) {
-	console.log("RUNNING: " + $stateProvider);
-    // Redirect to 404 when route not found
-    $urlRouterProvider.otherwise(function ($injector, $location) {
-      $injector.get('$state').transitionTo('not-found', null, {
-        location: false
-      });
-    });
+angular.module('core').config(['$routeProvider',
+  function ($routeProvider) {
     // Home state routing
-    $stateProvider
-    .state('home', {
-      url: '/',
-      templateUrl: 'modules/core/client/views/home.client.view.html'
-    });
+    $routeProvider
+    .when('/', {
+      templateUrl: 'modules/core/client/views/home.client.view.html',
+      controller: 'HomeController'
+    })
+    .when('/not-found', {
+      templateUrl: 'modules/core/client/views/404.client.view.html'
+    })
+    .otherwise({redirectTo: '/not-found'});
   }
 ]);

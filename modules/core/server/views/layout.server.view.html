@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="mean">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -13,6 +13,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+  <!--Application JavaScript Files-->
+  {% for jsFile in jsFiles %}
+    <script type="text/javascript" src="{{jsFile}}"></script>
+  {% endfor %}
+
   <!-- Fav Icon -->
   <link href="{{favicon}}" rel="shortcut icon" type="image/x-icon">
 
@@ -20,7 +25,7 @@
   <!--{% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}-->
 </head>
 
-<body class="ng-cloak">
+<body ng-app="mean">
   <!--<header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>-->
   <section class="content">
     <section class="container">
@@ -33,11 +38,6 @@
   <script type="text/javascript">
     var user = {{ user | json | safe }};
   </script>
-
-  <!--Application JavaScript Files-->
-  {% for jsFile in jsFiles %}
-    <script type="text/javascript" src="{{jsFile}}"></script>
-  {% endfor %}
 
 </body>
 

@@ -11,7 +11,7 @@
     "url": "https://github.com/domenester/fasterfood.git"
   },
   "scripts": {
-    "postinstall": "install-app-deps",
+    "postinstall": "install-app-deps && bower install --config.interactive=false",
     "start": "npm install && electron ./app",
     "dev": "gulp build && electron ./",
     "pack": "build --dir",
