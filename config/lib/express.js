@@ -9,8 +9,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
-const {app} = require('electron');
-const electron = app;
+const { global } = require('../global');
 
 /**
  * Initialize local variables
@@ -34,7 +33,7 @@ module.exports.initLocalVariables = function (app) {
  */
 module.exports.initModulesConfiguration = function (app, db) {
   config.files.server.configs.forEach(function (configPath) {
-    require(electron.getAppPath() + '/' + configPath)(app, db);
+    require(global.path.root + '/' + configPath)(app, db);
   });
 };
 
@@ -87,13 +86,11 @@ module.exports.initMiddleware = function (app) {
  */
 module.exports.initModulesClientRoutes = function (app) {
   // Setting the app router and static folder
-  app.use('/', express.static(config.app.globalPath + '/public'));
-  // console.log('static files: ' + electron.getAppPath() + '/public');
-  // app.use('/', express.static( electron.getAppPath() + '/public'));
+  app.use('/', express.static(global.path.root + '/public'));
 
   // Globbing static routing
   config.folders.client.forEach(function (staticPath) {
-    let toUse = config.app.globalPath + staticPath.replace(new RegExp(/\//g), '\\');
+    let toUse = global.path.root + staticPath.replace(new RegExp(/\//g), '\\');
     console.log('staticPath : ' + staticPath);
     console.log('globalPath : ' + toUse);
     app.use(staticPath, express.static(toUse));
@@ -107,8 +104,8 @@ module.exports.initModulesClientRoutes = function (app) {
 module.exports.initModulesServerRoutes = function (app) {
   // Globbing routing files
   config.files.server.routes.forEach(function (routePath) {
-    console.log('routePath: ' + electron.getAppPath() + '/' + routePath);
-    require(electron.getAppPath() + '/' + routePath)(app);
+    console.log('routePath: ' + global.path.root + '/' + routePath);
+    require(global.path.root + '/' + routePath)(app);
   });
 };
 

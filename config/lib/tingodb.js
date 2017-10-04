@@ -12,7 +12,7 @@ var tingodb = tingoDb().Db;
 module.exports.getCollection = function (name, cb) {
 
   var tingo = new tingodb(config.db.connectionPath, {});
-  var usersCollection = tingo.collection(config.db.path + "/" + name, function (err) {
+  var collection = tingo.collection(config.db.path + "/" + name, function (err) {
     // Log Error
     if (err) {
       console.error(chalk.red('Could not connect to TingoDB!'));
@@ -20,7 +20,7 @@ module.exports.getCollection = function (name, cb) {
     } else {
       // Call callback FN
       console.log(chalk.green('Connected to collection: ' + name));
-      if (cb) cb(usersCollection);
+      if (cb) cb(collection);
     }
   });
 };

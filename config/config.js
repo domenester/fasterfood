@@ -9,8 +9,7 @@ var _ = require('lodash'),
   //fs = require('fs'),
   path = require('path');
 
-const { app } = require('electron');
-let appPath = app.getAppPath();
+const { global } = require('./global');
 
 /**
  * Get files by glob patterns
@@ -61,10 +60,10 @@ var initGlobalConfigFolders = function (config, assets) {
     client: {}
   };
   console.log('processCwd: ' + process.cwd());
-  console.log('appPath: ' + appPath);
-  console.log('appPathReplace: ' + appPath.replace(new RegExp(/\\/g), '/'));
+  console.log('appPath: ' + global.path.root);
+  console.log('appPathReplace: ' + global.path.root.replace(new RegExp(/\\/g), '/'));
   // Setting globbed client paths
-  config.folders.client = getGlobbedPaths( appPath + '/modules/*/client/', appPath.replace(new RegExp(/\\/g), '/'));
+  config.folders.client = getGlobbedPaths( global.path.root + '/modules/*/client/', global.path.root.replace(new RegExp(/\\/g), '/'));
 };
 
 var initGlobalConfigFiles = (config, assets) => {
@@ -89,9 +88,9 @@ var initGlobalConfigFiles = (config, assets) => {
 
 var initGlobalConfig = () => {
 	// Get the default assets
-  var assets = require(path.join( appPath, '/config/assets/default'));
+  var assets = require(path.join( global.path.root, '/config/assets/default'));
 	// Get the default config
-	var config = require(path.join( appPath, '/config/env/default'));
+	var config = require(path.join( global.path.root, '/config/env/default'));
 	// Initialize global globbed files
 	initGlobalConfigFiles(config, assets);
   // Initialize global globbed folders

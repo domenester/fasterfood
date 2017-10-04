@@ -1,19 +1,20 @@
 'use strict';
 
 const { app } = require('electron');
+const { global } = require('../global');
 const path = 'db';
 module.exports = {
     app: {
         title: 'Food-Faster',
         description: 'Fast Managment',
         keywords: 'node',
-        globalPath: app.getAppPath()
+        globalPath: global.path.root
     },
     port: process.env.PORT || 3001,
     db: {
-        connectionPath: app.getPath('userData'),
+        connectionPath: global.path.userData,
         path: path,
-        location: app.getPath('userData') + '/' + path,
+        location: global.path.userData + '/' + path,
         uri: 'mongodb://localhost',
         options: {
             user: '',
