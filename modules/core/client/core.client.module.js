@@ -1,3 +1,3 @@
 'use strict';
 // Use Applicaion configuration module to register a new module
-ApplicationConfiguration.registerModule('core', ['ngRoute']);
+ApplicationConfiguration.registerModule('core', ['ui.router']);
