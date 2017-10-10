@@ -10,6 +10,11 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
       });
     });
 
+    // $urlRouterProvider.otherwise(function ($injector, $location) {
+    //   $state = $injector.get('$state');
+    //   $state.go('not-found');
+    // });
+
     // Users state routing
     $stateProvider
       .state('register', {

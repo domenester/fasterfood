@@ -10,6 +10,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
       });
     });
 
+    // $urlRouterProvider.otherwise(function ($injector, $location) {
+    //   $state = $injector.get('$state');
+    //   $state.go('not-found');
+    // });
+
     // Home state routing
     $stateProvider
     .state('home', {
