@@ -4,11 +4,7 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
   function ($stateProvider, $urlRouterProvider) {
     
     // Redirect to 404 when route not found
-    $urlRouterProvider.otherwise(function ($injector, $location) {
-      $injector.get('$state').transitionTo('not-found', null, {
-        location: false
-      });
-    });
+    $urlRouterProvider.otherwise('/not-found');
 
     // $urlRouterProvider.otherwise(function ($injector, $location) {
     //   $state = $injector.get('$state');
@@ -19,7 +15,7 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('register', {
         url: '/register',
-        templateUrl: 'modules/users/client/views/register.server.view.html',
+        templateUrl: 'modules/users/client/views/register.client.view.html',
 		    controller: 'Register'
       });
   }

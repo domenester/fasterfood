@@ -2,28 +2,28 @@
 //Start by defining the main module and adding the module dependencies
 angular.module(ApplicationConfiguration.applicationModuleName, ApplicationConfiguration.applicationModuleVendorDependencies);
 
-angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state) {
-	//$state.go('home');
-	console.log($state.get());
-	// //Record previous state
-	// $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-	// 	//event.preventDefault();
-	// 	console.log($state.get());
-	// 	$state.go('home');
-	// });	
-	//$state.go('/');
-	//Then init the app
-	//angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);		
+// angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $state) {
+// 	$state.go('home');
+// 	//console.log($state.get());
+// 	// //Record previous state
+// 	$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+// 		//event.preventDefault();
+// 		console.log($state.get());
+// 		//$state.go('home');
+// 	});	
+// 	//$state.go('/');
+// 	//Then init the app
+// 	//angular.bootstrap(document, [ApplicationConfiguration.applicationModuleName]);		
 	
-});
-// // Setting HTML5 Location Mode
-// angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider', '$httpProvider',
-//   function ($locationProvider, $httpProvider) {
-//     $locationProvider.html5Mode(true).hashPrefix('!');
+// });
+// Setting HTML5 Location Mode
+angular.module(ApplicationConfiguration.applicationModuleName).config(['$locationProvider', '$httpProvider',
+  function ($locationProvider, $httpProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
 
-//     $httpProvider.interceptors.push('authInterceptor');
-//   }
-// ]);
+    //$httpProvider.interceptors.push('authInterceptor');
+  }
+]);
 
 // angular.module(ApplicationConfiguration.applicationModuleName).run(function ($rootScope, $location) {
 

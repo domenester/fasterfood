@@ -4,6 +4,7 @@
  * Render the main application page
  */
 exports.register = function (req, res) {
-  res.json("Sending Register Controller Data");
-  //res.status(200).send();
+  res.render('modules/core/server/views/index', {
+    user: req.user || null
+  });
 };
