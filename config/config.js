@@ -79,9 +79,9 @@ var initGlobalConfigFiles = (config, assets) => {
   config.files.server.configs = getGlobbedPaths(assets.server.config);
   // Setting Globbed js files
   config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/').concat(getGlobbedPaths(assets.client.js, ['public/']));
-  console.log('config.files.client.js: ' + JSON.stringify(config.files.client.js));
   // Setting Globbed css files
   config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/').concat(getGlobbedPaths(assets.client.css, ['public/']));
+  console.log('config.files.client.css: ' + JSON.stringify(config.files.client.css));
   // Setting Globbed views files
   config.files.client.views = getGlobbedPaths(assets.client.views, 'public/');
 };

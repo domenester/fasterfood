@@ -24,7 +24,15 @@ function createDbFolderIfDontExist( ) {
 function createWindow () {
   createDbFolderIfDontExist();
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600})
+  win = new BrowserWindow({
+    width: 800, 
+    height: 600,
+    minHeight: 320,
+    minWidth: 320
+  });
+
+  /** Disable the menu bar */
+  //win.setMenu(null);
 
   //Starting the server, then loads the localhost;
   server.start( (admin) => {
