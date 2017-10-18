@@ -10,7 +10,10 @@ module.exports = {
         keywords: 'node',
         globalPath: global.path.root
     },
-    port: process.env.PORT || 3001,
+    server: {
+        host: process.env.HOST || '127.0.0.1',
+        port: process.env.PORT || 3001,
+    },    
     db: {
         connectionPath: global.path.userData,
         path: path,

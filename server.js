@@ -25,9 +25,9 @@ module.exports.init = function init(cb) {
 module.exports.start = function start(cb) {
 
 	this.init( (app, usersCollection) => {		
-		app.listen(config.port, () => {
+		app.listen(config.server.port, () => {
 			// Logging initialization
-			console.log('listening on ' + config.port);
+			console.log('listening on ' + config.server.port);
 			this.checkAdmin(usersCollection, cb);
 		});			
 	});
