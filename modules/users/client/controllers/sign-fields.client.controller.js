@@ -1,6 +1,6 @@
 'use strict';
-angular.module('users').controller('SignFieldsController', ['$scope', 'LoginFormDatas', 
-  function ($scope, LoginFormDatas) {
+angular.module('users').controller('SignFieldsController', ['$scope', 'LoginFormDatas', '$location',
+  function ($scope, LoginFormDatas, $location) {
     $scope.rootPath = "modules/users/client/views/";
     $scope.filePath = $scope.rootPath + "sign-fields.client.view.html";
 
@@ -11,6 +11,7 @@ angular.module('users').controller('SignFieldsController', ['$scope', 'LoginForm
     $scope.email = LoginFormDatas.get('email');
     $scope.password = LoginFormDatas.get('password');
 
+    $scope.isForgotPassPage = ( $location.path().indexOf('forgot-pass') > 0 ? true : false );
   }
 ]);
 
@@ -29,9 +30,8 @@ angular.module('users').service('LoginFormDatas', function () {
   }
 
   this.reset = function () {
-      datas = {
-        email: '',
-        password: ''
-      };
+    for(let key in datas) {
+      if (datas.hasOwnProperty(key)) datas[key] = '';     
+    }
   }
 });

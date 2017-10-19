@@ -8,7 +8,9 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
+var passport = require('passport');
 var flash = require('connect-flash');
+var session = require('express-session');
 const { global } = require('../global');
 
 /**
@@ -41,11 +43,6 @@ module.exports.initModulesConfiguration = function (app, db) {
  * Initialize application middleware
  */
 module.exports.initMiddleware = function (app) {
-  // // Showing stack errors
-  // app.set('showStackError', true);
-
-  // // Enable jsonp
-  // app.enable('jsonp callback');
 
   // Should be placed before express.static
   app.use(compress({
@@ -54,31 +51,31 @@ module.exports.initMiddleware = function (app) {
     },
     level: 9
   }));
-
-  // // Initialize favicon middleware
-  // app.use(favicon(app.locals.favicon));
-
-  // // Enable logger (morgan)
-  // app.use(morgan(logger.getFormat(), logger.getOptions()));
-
-  // // Environment dependent middleware
-  // if (process.env.NODE_ENV === 'development') {
-  //   // Disable views cache
-  //   app.set('view cache', false);
-  // } else if (process.env.NODE_ENV === 'production') {
-  //   app.locals.cache = 'memory';
-  // }
-
   // Request body parsing middleware should be above methodOverride
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-  app.use(bodyParser.json());
+  //app.use(bodyParser.json());
   app.use(methodOverride());
 
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
   app.use(flash());
+
+  app.use(passport.initialize());
+  app.use(passport.session()); // persistent login sessions
+};
+
+/**
+ * Configure Express session
+ */
+module.exports.initSession = function (app) {
+  // Express MongoDB session storage
+  app.use(session({ 
+      secret: 'secretToBeChanged',
+      saveUninitialized: false,
+      resave: false
+  }));
 };
 
 /**
@@ -133,6 +130,8 @@ module.exports.init = function (db) {
   this.initModulesConfiguration(app, db);
 
   this.initViewEngine(app);
+
+  this.initSession(app);
 
   this.initModulesClientRoutes(app);
 

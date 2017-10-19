@@ -1,7 +1,7 @@
 <section ng-controller="SignUpController">
 	<div class="login-container">
 			<section id="login-content">
-				<form action="">
+				<form name="signUpForm" method="POST" ng-submit="signup(signUpForm)">
 					<h1 id="login-title">Registrar</h1>
 					<div ng-include src="signFieldsPath"></div>
 					<div class="row">
@@ -10,7 +10,7 @@
 						</div>
 						<div class="row text-center">
 							<div class="col-6" style="margin-bottom: 14px;">
-								<a href="#">Esqueceu a senha?</a>
+								<a href="forgot-pass">Esqueceu a senha?</a>
 							</div>
 							<div class="col-6" style="margin-bottom: 14px;">
 								<a ui-sref="sign-in">Logar</a>

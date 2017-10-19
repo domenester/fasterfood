@@ -22,6 +22,11 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
         url: '/sign-in',
         templateUrl: 'modules/users/client/views/sign-in.client.view.html',
 		    controller: 'SignInController'
+      })
+      .state('forgot-pass', {
+        url: '/forgot-pass',
+        templateUrl: 'modules/users/client/views/forgot-pass.client.view.html',
+		    controller: 'ForgotPassController'
       });
   }
 ]);

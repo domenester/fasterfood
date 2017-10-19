@@ -1,10 +1,13 @@
 'use strict';
 
 /**
- * Render the main application page
+ * Module dependencies.
  */
-exports.register = function (req, res) {
-  res.render('modules/core/server/views/index', {
-    user: req.user || null
-  });
-};
+var _ = require('lodash');
+
+/**
+ * Extend user's controller
+ */
+module.exports = _.extend(
+  require('./authentication/users.authentication.server.controller'),
+);

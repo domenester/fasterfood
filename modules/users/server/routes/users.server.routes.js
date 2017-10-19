@@ -1,9 +1,8 @@
 'use strict';
 
 // Root routing
-  var user = require('../controllers/user.server.controller');
-  
-module.exports = function (app) {  
+const user = require('../controllers/user.server.controller');
 
-  app.route('/sign-up').get(user.register);
-};
+module.exports = function (app) {  
+  app.post('/sign-up', user.signup);
+}

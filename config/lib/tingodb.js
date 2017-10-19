@@ -9,8 +9,7 @@ const electron = app;
 var tingodb = tingoDb().Db;
 
 // Initialize Mongoose
-module.exports.getCollection = function (name, cb) {
-
+module.exports.getCollection = (name, cb) => {
   var tingo = new tingodb(config.db.connectionPath, {});
   var collection = tingo.collection(config.db.path + "/" + name, function (err) {
     // Log Error
@@ -23,7 +22,7 @@ module.exports.getCollection = function (name, cb) {
       if (cb) cb(collection);
     }
   });
-};
+}
 
 // module.exports.crud = {
 //   insert: (collection, data, options) => {

@@ -1,16 +1,18 @@
-<section ng-controller="SignInController">
+<section ng-controller="ForgotPassController">
 	<div class="login-container">
 			<section id="login-content">
 				<form action="">
-					<h1 id="login-title">Log in</h1>
+					<h1 id="login-title">Enviar Senha</h1>
+
 					<div ng-include src="signFieldsPath"></div>
+					
 					<div class="row">
 						<div class="row">
-							<input class="col-offset-4 col-4 col-offset-4" type="submit" value="Log In" />
+							<input class="col-offset-4 col-4 col-offset-4" type="submit" value="Enviar" />
 						</div>
 						<div class="row text-center">
 							<div class="col-6" style="margin-bottom: 14px;">
-								<a href="forgot-pass">Esqueceu a senha?</a>
+								<a ui-sref="sign-in">Login</a>
 							</div>
 							<div class="col-6" style="margin-bottom: 14px;">
 								<a ui-sref="sign-up">Registrar</a>
