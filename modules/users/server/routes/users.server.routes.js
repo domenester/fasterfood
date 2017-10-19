@@ -5,5 +5,5 @@
   
 module.exports = function (app) {  
 
-  app.route('/register').get(user.register);
+  app.route('/sign-up').get(user.register);
 };

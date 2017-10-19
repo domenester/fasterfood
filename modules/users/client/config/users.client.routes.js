@@ -13,10 +13,15 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
 
     // Users state routing
     $stateProvider
-      .state('register', {
-        url: '/register',
-        templateUrl: 'modules/users/client/views/register.client.view.html',
-		    controller: 'Register'
+      .state('sign-up', {
+        url: '/sign-up',
+        templateUrl: 'modules/users/client/views/sign-up.client.view.html',
+		    controller: 'SignUpController'
+      })
+      .state('sign-in', {
+        url: '/sign-in',
+        templateUrl: 'modules/users/client/views/sign-in.client.view.html',
+		    controller: 'SignInController'
       });
   }
 ]);
