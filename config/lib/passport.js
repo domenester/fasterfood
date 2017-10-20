@@ -23,45 +23,39 @@ let localStrategyConfig = {
 	passwordField : 'password'
 };
 
-let localStrategyCallback = (username, password, done) => {
-	console.log("INSIDE PASSPORT");
-	//done();
-	throw new Error("ERROR INSIDE PASSPORT");
+let localStrategyCallback = (email, password, done) => {
 	
-	//return done('TESTING PASSPORT');
-	// let usersCollection = tingodb.getCollection('users');
-	// // asynchronous
-	// // User.findOne wont fire unless data is sent back
-	// process.nextTick(function() {
+	let usersCollection = tingodb.getCollection('users');
+	console.log("tingo: " + JSON.stringify(tingodb));
+	console.log("col: " + usersCollection);
+	process.nextTick(function() {
+		// find a user whose email is the same as the forms email
+		// we are checking to see if the user trying to login already exists
+		usersCollection.findOne({ 'email' :  email }, function(err, user) {
+			// if there are any errors, return the error
+			if (err)
+				return done(err);
 
-	// 	// find a user whose email is the same as the forms email
-	// 	// we are checking to see if the user trying to login already exists
-	// 	usersCollection.findOne({ 'email' :  email }, function(err, newUser) {
-	// 		// if there are any errors, return the error
-	// 		if (err)
-	// 			return done(err);
+			// check to see if theres already a user with that email
+			if (user) {
+				return done(null, false, null);
+			} else {
 
-	// 		// check to see if theres already a user with that email
-	// 		if (user) {
-	// 			return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-	// 		} else {
+				// if there is no user with that email
+				// create the user
+				let newUser = {
+					email,
+					password,
+				};
 
-	// 			// if there is no user with that email
-	// 			// create the user
-	// 			let newUser = {
-	// 				email: req.body.email,
-	// 				password: req.body.password,
-	// 			};
-
-	// 			// save the user
-	// 			newUser.save(function(err) {
-	// 				if (err)
-	// 					throw err;
-	// 				return done(null, newUser);
-	// 			});
-	// 		}
-	// 	});
-	// });
+				// save the user
+				usersCollection.insert(newUser, function(err) {
+					if (err) throw err;
+					return done(null, newUser);
+				});
+			}
+		});
+	});
 }
 
 passport.use('signup', new LocalStrategy( localStrategyConfig, localStrategyCallback) );

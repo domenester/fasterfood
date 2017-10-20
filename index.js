@@ -35,16 +35,7 @@ function createWindow () {
   //win.setMenu(null);
 
   //Starting the server, then loads the localhost;
-  server.start( (admin) => {
-    console.log('admin: ' + admin);
-    if(admin) {
-      win.loadURL('http://localhost:3001/');
-    } else {
-      console.log('going to register');
-      win.loadURL('http://localhost:3001/sign-up');
-    }
-    
-  });
+  win.loadURL('http://localhost:3001/sign-in');
 
   // Emitted when the window is closed.
   win.on('closed', () => {

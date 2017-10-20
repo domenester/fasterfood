@@ -17,12 +17,8 @@ angular.module('users').controller('SignUpController', ['$scope', '$controller',
       $http({
         method: 'POST',
         url: $location.path(),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/json'},
         data: user
-      }).then(function success(res) {
-        console.log("USER POSTED.");
-      }, function error(res) {
-        console.log("ERR POSTED: " + res);
       });
     };
   }

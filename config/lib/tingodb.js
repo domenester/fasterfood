@@ -9,9 +9,9 @@ const electron = app;
 var tingodb = tingoDb().Db;
 
 // Initialize Mongoose
-module.exports.getCollection = (name, cb) => {
+module.exports.getCollection = (name) => {
   var tingo = new tingodb(config.db.connectionPath, {});
-  var collection = tingo.collection(config.db.path + "/" + name, function (err) {
+  return tingo.collection(config.db.path + "/" + name, function (err) {
     // Log Error
     if (err) {
       console.error(chalk.red('Could not connect to TingoDB!'));
@@ -19,7 +19,6 @@ module.exports.getCollection = (name, cb) => {
     } else {
       // Call callback FN
       console.log(chalk.green('Connected to collection: ' + name));
-      if (cb) cb(collection);
     }
   });
 }
