@@ -52,9 +52,9 @@ module.exports.initMiddleware = function (app) {
     level: 9
   }));
   // Request body parsing middleware should be above methodOverride
-  // app.use(bodyParser.urlencoded({
-  //   extended: true
-  // }));
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
   app.use(bodyParser.json());
   app.use(methodOverride());
 

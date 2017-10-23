@@ -1,7 +1,7 @@
 <section ng-controller="SignUpController">
 	<div class="login-container">
 			<section id="login-content">
-				<form name="signUpForm" method="POST" ng-submit="signup(signUpForm)">
+				<form name="signUpForm" method="POST" ng-submit="signup(signUpForm, 'POST')">
 					<h1 id="login-title">Registrar</h1>
 					<div ng-include src="signFieldsPath"></div>
 					<div class="row">

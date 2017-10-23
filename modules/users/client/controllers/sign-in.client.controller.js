@@ -4,5 +4,8 @@ angular.module('users').controller('SignInController', ['$scope', '$controller',
     let signFieldsController = $scope.$new();
     $controller("SignFieldsController", {$scope : signFieldsController });
     $scope.signFieldsPath = signFieldsController.filePath;
+    $scope.signin = (signInForm, verb, location) => {
+      signFieldsController.sign(signInForm, verb, location);
+    };
   }
 ]);
