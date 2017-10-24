@@ -1,6 +1,6 @@
 'use strict';
-angular.module('users').controller('SignFieldsController', ['$scope', 'LoginFormDatas', '$http', '$location',
-  function ($scope, LoginFormDatas, $http, $location) {
+angular.module('users').controller('SignFieldsController', ['$scope', 'LoginFormDatas', '$http', '$location', 'Alerts', 
+  function ($scope, LoginFormDatas, $http, $location, Alerts) {
     $scope.rootPath = "modules/users/client/views/";
     $scope.filePath = $scope.rootPath + "sign-fields.client.view.html";
 
@@ -31,9 +31,15 @@ angular.module('users').controller('SignFieldsController', ['$scope', 'LoginForm
         headers: {'Content-Type': 'application/json'},
         data: user
       }).then( 
-        (msg) => { console.log("Success: " + JSON.stringify(msg)); }, 
-        (msg) => { console.log("Error: " + JSON.stringfy(msg)); }
-      );
+        (msg) => {           
+          //window.location.href = '/';        
+          console.log("Success: " + JSON.stringify(msg)); 
+        }, 
+        (msg) => { 
+          //Alerts.showAndCloseAlert(Alerts.types.danger, msg.data);
+          console.log("Error: " + JSON.stringify(msg)); 
+        }
+      );      
     };
   }
 ]);

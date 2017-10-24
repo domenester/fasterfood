@@ -21,21 +21,25 @@ module.exports.signin =
 
 (req, res, next) => { 
   passport.authenticate('signin', {
-    failureRedirect : '/sign-in'
-  }, function(err, user, info) {
-    if (err) { return next(err); }
-    // Redirect if it fails
-    if (!user) { return res.redirect('/sign-in'); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      // Redirect if it succeeds
-      console.log("LOGGIN!");
-      console.log("req: " + JSON.stringify(req.user) + " res: " + res);
-      return res.redirect(200, '/', (err) => {
-        console.log("ERR?: " + JSON.stringify(err))
-      });
-    });
-  })(req, res, next);
+    successRedirect: '/',  
+    failureRedirect: '/sign-in',
+    failureFlash : true
+  }
+  // , function(err, user, info) {
+  //   console.log("Info: " + JSON.stringify(info));
+  //   if (err) { return next(err); }
+  //   // Redirect if it fails
+  //   if (!user) { return next(info); }
+
+  //   req.login(user, function(err) {
+  //     if (err) { return next(err); }
+  //     // Redirect if it succeeds
+  //     console.log("LOGGIN!");
+  //     console.log("req: " + JSON.stringify(req.user) + " res: " + res);
+  //     return res.redirect('/');
+  //   });
+  // }
+)(req, res, next);
 }
 
 // function (req, res) {

@@ -22,7 +22,8 @@ passport.deserializeUser(function(id, done) {
 let localStrategyConfig = {
 	// by default, local strategy uses username and password, we will override with email
 	usernameField : 'email',
-	passwordField : 'password'
+	passwordField : 'password',
+	passReqToCallback : true
 };
 
 let localStrategySignUp = (email, password, done) => {
@@ -67,7 +68,7 @@ let localStrategySignUp = (email, password, done) => {
 	});
 };
 
-let localStrategySignIn = (email, password, done) => {
+let localStrategySignIn = (req, email, password, done) => {
 	console.log("IN LOGIN1");
 	process.nextTick(function() {
 		console.log("IN LOGIN2");
@@ -78,14 +79,12 @@ let localStrategySignIn = (email, password, done) => {
 
             // if no user is found, return the message
             if (!user)
-                return done(null, false, {
-					message: "Usuário não encontrado."
-				});
+                return done(null, false, req.flash('USER NOT'));
 			console.log("IN LOGIN3");
             // if the user is found but the password is wrong
             if (!userHelper.validPassword(password, user.password))
 				return done(null, false, {
-					message: "Senha incorreta."
+					message: "Dados incorretos."
 				}); // create the loginMessage and save it to session as flashdata
 				
 				console.log("IN LOGIN4");
