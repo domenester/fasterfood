@@ -1,7 +1,8 @@
 'use strict';
 
 const { app } = require('electron');
-
+console.log("Global rooth path: " + app.getAppPath());
+console.log("Global userData path: " + app.getPath('userData'));
 const global = {
 	path: {
 		//Root path of this application

@@ -26,7 +26,7 @@ let localStrategyConfig = {
 	passReqToCallback : true
 };
 
-let localStrategySignUp = (email, password, done) => {
+let localStrategySignUp = (req, email, password, done) => {
 	
 	process.nextTick(function() {
 		// find a user whose email is the same as the forms email
