@@ -16,14 +16,23 @@ module.exports.signin =
   passport.authenticate('signin', {
     failureRedirect: '/sign-in',
     failureFlash : true
-  }, function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return next(info); }
+  }, function(err, user, info) {      
+      if (err) {
+        console.log("passport.authenticate - error: " + JSON.stringify(err) );
+        return next(err); 
+      }      
+      if (!user) { 
+        console.log("passport.authenticate - !user: " + JSON.stringify(info) );
+        return res.status(500).json(info); 
+      }
       req.login(user, function(err) {
-        if (err) { return next(err); }
-        console.log("LOGGIN!");
-        console.log("User logged in: " + req.user.email);
-        return res.json(req.user);
+        if (err) {
+          console.log("passport.authenticate - req.login - error: " + JSON.stringify(err) );
+          return next(err); 
+        } else {
+          console.log("passport.authenticate - req.login - User logged in: " + req.user.email);
+          return res.json(req.user);
+        }        
       });
     }
   )(req, res, next);

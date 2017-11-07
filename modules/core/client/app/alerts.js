@@ -12,9 +12,9 @@ angular.module('core').service('Alerts', function () {
             let alertElement = angular.element( document.querySelector('#alert') );
             alertElement.removeClass().addClass(_class);
             alertElement.text(message);
-            // alertElement.delay(4000).slideUp(200, function() {
-            //     alertElement.alert('close');
-            // });
+            alertElement.delay(4000).slideUp(200, function() {
+                alertElement.alert('close');
+            });
         },
     };
 });

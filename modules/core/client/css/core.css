@@ -7,9 +7,13 @@ body {
 .content {
 	width: 100%;
 }
-
 .index-view {
 	position: relative;
     top: 50%;
     transform: translateY(-57%);
+}
+#alert {
+	position: absolute;
+	width: 100%;
+	opacity: 0.8;
 }

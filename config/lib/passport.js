@@ -84,7 +84,7 @@ let localStrategySignIn = (req, email, password, done) => {
             // if the user is found but the password is wrong
             if (!userHelper.validPassword(password, user.password))
 				return done(null, false, {
-					message: "Dados incorretos."
+					message: "Verifique se os dados estão corretos."
 				}); // create the loginMessage and save it to session as flashdata
 				
 				console.log("IN LOGIN4");

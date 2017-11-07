@@ -31,12 +31,9 @@ angular.module('users').controller('SignFieldsController', ['$scope', 'LoginForm
         headers: {'Content-Type': 'application/json'},
         data: user
       }).then( 
-        (msg) => {                  
-          console.log("Success: " + JSON.stringify(msg)); 
-          $location.url('/');
-        }, 
+        (msg) => $location.url('/'), 
         (msg) => { 
-          //Alerts.showAndCloseAlert(Alerts.types.danger, msg.data);
+          Alerts.showAndCloseAlert(Alerts.types.danger, msg.data.message);
           console.log("Error: " + JSON.stringify(msg)); 
         }
       );      
