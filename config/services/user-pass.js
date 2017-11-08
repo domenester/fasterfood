@@ -1,3 +1,5 @@
+'use strict';
+
 let bcrypt   = require('bcrypt-nodejs');
 
 module.exports.generateHash = function(password) {

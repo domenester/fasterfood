@@ -6,34 +6,52 @@ const path = require('path'),
 
 console.log("TINGO PATH: " + path.resolve('./config/lib/tingodb'));
 
-module.exports.signup = passport.authenticate('signup', {
-  successRedirect : '/',
-  failureRedirect : '/sign-in'
-});
+const forceLogin = (req, res, user) => {
+  req.login(user, function(err) {
+    if (err) {
+      console.log("passport.authenticate - req.login - error: " + JSON.stringify(err) );
+      return next(err); 
+    } else {
+      console.log("passport.authenticate - req.login - User logged in: " + req.user.email);
+      return res.json(req.user);
+    }        
+  });
+};
 
-module.exports.signin = 
-(req, res, next) => { 
+module.exports.signup = (req, res, next) => { 
+  passport.authenticate('signup', {
+    failureRedirect: '/sign-up',
+    failureFlash : true
+  }, function(err, user, info) {      
+      if (err) {
+        console.log("passport.authenticate - error: " + JSON.stringify(err) );
+        return res.status(500).json(info);
+      }
+      if (!user) {
+        console.log("passport.authenticate - failure: " + JSON.stringify(info) );
+        return res.status(500).json(info); 
+      } else {
+        forceLogin(req, res, user);
+      }
+    }
+  )(req, res, next);
+}
+
+module.exports.signin = (req, res, next) => { 
   passport.authenticate('signin', {
     failureRedirect: '/sign-in',
     failureFlash : true
   }, function(err, user, info) {      
       if (err) {
         console.log("passport.authenticate - error: " + JSON.stringify(err) );
-        return next(err); 
-      }      
+        return res.status(500).json(info); 
+      }  
       if (!user) { 
         console.log("passport.authenticate - !user: " + JSON.stringify(info) );
         return res.status(500).json(info); 
+      } else {
+        forceLogin(req, res, user);
       }
-      req.login(user, function(err) {
-        if (err) {
-          console.log("passport.authenticate - req.login - error: " + JSON.stringify(err) );
-          return next(err); 
-        } else {
-          console.log("passport.authenticate - req.login - User logged in: " + req.user.email);
-          return res.json(req.user);
-        }        
-      });
     }
   )(req, res, next);
 }

@@ -5,7 +5,8 @@ let LocalStrategy = require('passport-local').Strategy;
 let tingodb = require('./tingodb');
 let passport = require('passport');
 let usersCollection = tingodb.getCollection('users');
-const userHelper = require('../helpers/user');
+const userPassService = require('../services/user-pass');
+const authService = require('../services/public/authentication');
 
 // used to serialize the user for the session
 passport.serializeUser(function(user, done) {
@@ -27,45 +28,52 @@ let localStrategyConfig = {
 };
 
 let localStrategySignUp = (req, email, password, done) => {
-	
-	process.nextTick(function() {
-		// find a user whose email is the same as the forms email
-		// we are checking to see if the user trying to login already exists
-		usersCollection.findOne({ 'email' :  email }, function(err, user) {
-			// if there are any errors, return the error
-			if (err) {
-				return done(err);
-				console.log("Error finding user with datas: " + JSON.stringify(user));
-			}
-			// check to see if theres already a user with that email
-			if (user) {
-				console.log("User with email already exists: " + JSON.stringify(user));
-				return done(null, user, {
-					message: "Email já cadastrado."
-				});
-			} else {
-				// if there is no user with that email
-				// create the user
-				let newUser = {
-					email,
-					password: userHelper.generateHash(password),
-				};
-				
-				usersCollection.insert(newUser, function(err) {
-					if (err) {
-						console.log("Error inserting user with datas: " + JSON.stringify(newUser));
-						throw err;
-					}
-					else { 
-						console.log("Adding new user: " + JSON.stringify(newUser));
-						return done(null, newUser, {
-							message: "Email cadastrado com sucesso."
-						});						
-					}
-				});
-			}
+	if (authService.isEmailValid(email)) {
+		process.nextTick(function() {
+			// find a user whose email is the same as the forms email
+			// we are checking to see if the user trying to login already exists
+			usersCollection.findOne({ 'email' :  email }, function(err, user) {
+				// if there are any errors, return the error
+				if (err) {
+					return done(err);
+					console.log("Error finding user with datas: " + JSON.stringify(user));
+				}
+				// check to see if theres already a user with that email
+				if (user) {
+					console.log("User with email already exists: " + JSON.stringify(user));
+					return done(null, false, {
+						message: "Email já cadastrado.",
+					});
+				} else {
+					// if there is no user with that email
+					// create the user
+					let newUser = {
+						email,
+						password: userPassService.generateHash(password),
+					};
+					
+					usersCollection.insert(newUser, function(err) {
+						if (err) {
+							console.log("Error inserting user with datas: " + JSON.stringify(newUser));
+							throw err;
+						}
+						else { 
+							console.log("Adding new user: " + JSON.stringify(newUser));
+							return done(null, newUser, {
+								message: "Email cadastrado com sucesso."
+							});						
+						}
+					});
+				}
+			});
 		});
-	});
+	} else {
+		console.log("Invalid email: " + email);
+		return done(null, false, {
+			message: "Email inválido."
+		});
+	}
+	
 };
 
 let localStrategySignIn = (req, email, password, done) => {
@@ -78,14 +86,17 @@ let localStrategySignIn = (req, email, password, done) => {
                 return done(err);
 
             // if no user is found, return the message
-            if (!user)
-                return done(null, false, req.flash('USER NOT'));
-			console.log("IN LOGIN3");
-            // if the user is found but the password is wrong
-            if (!userHelper.validPassword(password, user.password))
+            if (!user) {
 				return done(null, false, {
 					message: "Verifique se os dados estão corretos."
-				}); // create the loginMessage and save it to session as flashdata
+				});
+			}
+			console.log("IN LOGIN3");
+            // if the user is found but the password is wrong
+            if (!userPassService.validPassword(password, user.password))
+				return done(null, false, {
+					message: "Verifique se os dados estão corretos."
+				});
 				
 				console.log("IN LOGIN4");
             // all is well, return successful user
