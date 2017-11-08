@@ -15,7 +15,12 @@
 
   <!--Application JavaScript Files-->
   {% for jsFile in jsFiles %}
-    <script type="text/javascript" src="{{jsFile}}"></script>
+    {% if jsFile.indexOf('jquery') === -1 %}
+      <script type="text/javascript" src="{{jsFile}}"></script>
+    {% else %}
+      <!-- Exposing jQuery manually because it's an electron enviornment -->
+      <script type="text/javascript" src="{{jsFile}}" onload="window.$ = window.jQuery = module.exports;"></script>
+    {% endif %}    
   {% endfor %}
 
   <!-- Fav Icon -->

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('core').service('Alerts', function () {
+angular.module('core').service('Alerts', ['jQuery', function ($) {
     return {
         types: {
             danger: 'alert alert-danger',
@@ -12,9 +12,8 @@ angular.module('core').service('Alerts', function () {
             let alertElement = angular.element( document.querySelector('#alert') );
             alertElement.removeClass().addClass(_class);
             alertElement.text(message);
-            alertElement.delay(4000).slideUp(200, function() {
-                alertElement.alert('close');
-            });
+            alertElement.slideDown(200);            
+            alertElement.delay(3000).slideUp(200);
         },
     };
-});
+}]);
