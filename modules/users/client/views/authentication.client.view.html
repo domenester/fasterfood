@@ -1,8 +1,14 @@
 <section ng-controller="AuthenticationController">
     <div class="row">
-        <input name="email" type="text" ng-model="email" ng-change="updateLoginFormData('email', this.email)" placeholder="Email" id="email" required />
+        <div ng-show="!isEmailValid" class="invalid-fields-warning">
+            Email inválido.
+        </div>
+        <input name="email" type="text" ng-model="email" ng-blur="fieldOnBlur('email', this.email)" ng-change="updateLoginFormData('email', this.email)" placeholder="Email" id="email" required />        
     </div>
     <div class="row" ng-hide="isForgotPassPage">
-        <input name="password" type="password" ng-model="password" ng-change="updateLoginFormData('password', this.password)" placeholder="Senha" id="password" required />
+        <div ng-show="!isPasswordValid" class="invalid-fields-warning">
+            Senha deve conter um mínimo de 8 dígitos.
+        </div>
+        <input name="password" type="password" ng-model="password" ng-blur="fieldOnBlur('password', this.password)" ng-change="updateLoginFormData('password', this.password)" placeholder="Senha" id="password" ng-required="!isForgotPassPage" />        
     </div>
 </section>

@@ -1,7 +1,7 @@
 <section ng-controller="ForgotPassController">
 	<div class="login-container">
 			<section id="login-content">
-				<form action="">
+				<form name="forgotPassForm" method="GET" ng-submit="forgotPass(forgotPassForm, 'POST')">
 					<h1 id="login-title">Enviar Senha</h1>
 
 					<div ng-include src="signFieldsPath"></div>

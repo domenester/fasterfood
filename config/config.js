@@ -86,6 +86,12 @@ var initGlobalConfigFiles = (config, assets) => {
   config.files.client.views = getGlobbedPaths(assets.client.views, 'public/');
 };
 
+/** Initialize the environment variables */
+var initEnvironmentVariables = () => {
+  
+	process.env.FORCE_COLOR = 1;
+};
+
 var initGlobalConfig = () => {
 	// Get the default assets
   var assets = require(path.join( global.path.root, '/config/assets/default'));
@@ -95,6 +101,8 @@ var initGlobalConfig = () => {
 	initGlobalConfigFiles(config, assets);
   // Initialize global globbed folders
   initGlobalConfigFolders(config, assets);
+
+  initEnvironmentVariables();
 
   console.log('config file: '+JSON.stringify(config));
 

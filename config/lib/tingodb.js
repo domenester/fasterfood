@@ -18,7 +18,7 @@ module.exports.getCollection = (name) => {
       console.log(err);
     } else {
       // Call callback FN
-      console.log(chalk.green('Connected to collection: ' + name));
+      console.log(chalk.green('Connected to collection: ') + name);
     }
   });
 }

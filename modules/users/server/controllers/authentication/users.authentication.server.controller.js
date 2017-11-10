@@ -2,15 +2,18 @@
 
 const path = require('path'),
       passport = require(path.resolve('./config/lib/passport')),
-      tingoDB = require(path.resolve('./config/lib/tingodb'));
+      tingodb = require(path.resolve('./config/lib/tingodb')),
+      nodemailer = require(path.resolve('./config/lib/nodemailer')),
+      crypto = require('crypto'),
+      async = require('async');
 
 console.log("TINGO PATH: " + path.resolve('./config/lib/tingodb'));
 
 const forceLogin = (req, res, user) => {
   req.login(user, function(err) {
     if (err) {
-      console.log("passport.authenticate - req.login - error: " + JSON.stringify(err) );
-      return next(err); 
+      console.log("passport.authenticate - req.login - error: " + err );
+      return res.status(500).json(err);
     } else {
       console.log("passport.authenticate - req.login - User logged in: " + req.user.email);
       return res.json(req.user);
@@ -24,7 +27,7 @@ module.exports.signup = (req, res, next) => {
     failureFlash : true
   }, function(err, user, info) {      
       if (err) {
-        console.log("passport.authenticate - error: " + JSON.stringify(err) );
+        console.log("passport.authenticate - error: " + err );
         return res.status(500).json(info);
       }
       if (!user) {
@@ -43,7 +46,7 @@ module.exports.signin = (req, res, next) => {
     failureFlash : true
   }, function(err, user, info) {      
       if (err) {
-        console.log("passport.authenticate - error: " + JSON.stringify(err) );
+        console.log("passport.authenticate - error: " + err );
         return res.status(500).json(info); 
       }  
       if (!user) { 
@@ -55,3 +58,54 @@ module.exports.signin = (req, res, next) => {
     }
   )(req, res, next);
 }
+
+module.exports.forgot = async (req, res, next) => {
+  console.log('IN FORGOT');
+
+  let usersCollection = tingodb.getCollection('users');
+  
+  /** Checks if user exists with email passed */
+  await new Promise((resolve, reject) => {
+    usersCollection.findOne({ 'email': req.body.email }, function(err, user) {
+
+      if (err) {
+        console.log("Error finding user to reset password for email: " + req.body.email);
+        return res.status(500).json(err);
+      }
+
+      if (!user) {
+        console.log("User not found to reset password for email: " + req.body.email);
+        return res.status(500).json(err);
+      }
+      resolve(true);
+    });
+  });
+
+  /** Generate a token for identify the user */
+  let token = await new Promise((resolve, reject) => {
+    crypto.randomBytes(20, function(err, buf) {
+      if (err) reject(err);
+      resolve( buf.toString('hex') );
+    });
+  });
+
+  /** Create a date tha expires in 1 hour */
+  let dateExpiration = Date.now() + 3600000;
+
+  /** Update the user with the token and date expiration */
+  await new Promise((resolve, reject) => {
+    usersCollection.update( 
+      {'email': req.body.email}, 
+      { $set: {resetPasswordToken: token, resetPasswordExpires: dateExpiration } },
+      function(err) {
+        if (err) {
+          console.log("Error saving token and expired date.");
+          return res.status(500).json(err);
+        }
+        resolve(true);
+    });
+  });
+
+  nodemailer.sendLinkForResetPassTo(req.body.email, token, req.headers.host);
+};
+//diogodomene@gmail.com

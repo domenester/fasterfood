@@ -1,15 +1,33 @@
 'use strict';
+
+//let clientAuthService = require('../../../../public/services/authentication');
+
 angular.module('users').controller('AuthenticationController', ['$scope', 'AuthFormPersist', '$http', '$location', 'Alerts', 
   function ($scope, AuthFormPersist, $http, $location, Alerts) {
     $scope.rootPath = "modules/users/client/views/";
-    $scope.filePath = $scope.rootPath + "authentication.client.view.html";
+    $scope.filePath = $scope.rootPath + "authentication.client.view.html";    
+
+    $scope.email = AuthFormPersist.get('email');
+    $scope.password = AuthFormPersist.get('password');
+
+    $scope.isEmailValid = ($scope.email ? authService.isEmailValid($scope.email) : true);
+    $scope.isPasswordValid = ($scope.password ? authService.isPasswordValid($scope.password) : true);
 
     $scope.updateLoginFormData = (field, value) => {
       AuthFormPersist.set(field, value);
     };
 
-    $scope.email = AuthFormPersist.get('email');
-    $scope.password = AuthFormPersist.get('password');
+    $scope.fieldOnBlur = (field, value) => {
+      switch (field) {
+        case 'email': 
+          $scope.isEmailValid = authService.isEmailValid($scope.email);
+        break;
+
+        case 'password':
+          $scope.isPasswordValid = authService.isPasswordValid($scope.password);
+        break
+      }
+    };    
 
     $scope.isForgotPassPage = ( $location.path().indexOf('forgot-pass') > 0 ? true : false );
 

@@ -6,7 +6,7 @@ let tingodb = require('./tingodb');
 let passport = require('passport');
 let usersCollection = tingodb.getCollection('users');
 const userPassService = require('../services/user-pass');
-const authService = require('../services/public/authentication');
+const authService = require('../../public/services/authentication');
 
 // used to serialize the user for the session
 passport.serializeUser(function(user, done) {
@@ -77,9 +77,7 @@ let localStrategySignUp = (req, email, password, done) => {
 };
 
 let localStrategySignIn = (req, email, password, done) => {
-	console.log("IN LOGIN1");
 	process.nextTick(function() {
-		console.log("IN LOGIN2");
 		usersCollection.findOne({ 'email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)
@@ -91,14 +89,12 @@ let localStrategySignIn = (req, email, password, done) => {
 					message: "Verifique se os dados estão corretos."
 				});
 			}
-			console.log("IN LOGIN3");
             // if the user is found but the password is wrong
             if (!userPassService.validPassword(password, user.password))
 				return done(null, false, {
 					message: "Verifique se os dados estão corretos."
 				});
 				
-				console.log("IN LOGIN4");
             // all is well, return successful user
             return done(null, user);
         });

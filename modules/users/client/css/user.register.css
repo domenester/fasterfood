@@ -240,3 +240,10 @@ form:after {
 	background-position: 0 -135px;
 	color: #00aeef;
 }
+
+.invalid-fields-warning {
+	margin: 0px 40px 4px 40px;
+    text-align: left;
+    font-size: 10px;
+    color: red;
+}
