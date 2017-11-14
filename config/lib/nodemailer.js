@@ -14,19 +14,23 @@ module.exports.sendLinkForResetPassTo = (email, token, host) => {
 		});
 	
 		var mailOptions = {
-		from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+		from: '"Equipe" <foo@blurdybloop.com>', // sender address
 		to: email, // list of receivers
-		subject: 'Node.js Password Reset',
-		text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-			'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+		subject: 'Alterar Senha',
+		text: 'Você está recebendo esse email, por que foi solicitado uma alteração de senha para essa conta.\n\n' +
+			'Clique no link a segui ou cole-o na barra de endereço do seu navagador para completar o processo.:\n\n' +
 			'http://' + host + '/reset/' + token + '\n\n' +
-			'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+			'Se você não solicitou isso, por favor, ignore esse email que sua senha permanecerá igual.\n'
 		};
 	
-		smtpTransport.sendMail(mailOptions, function(err) {
-			console.log('An e-mail has been sent to ' + email + ' with further instructions.');
+		smtpTransport.sendMail(mailOptions, function(err, info) {
+			if (err) {
+				console.log('Error trying send email for forgotten pass.');
+				return err;	
+			}
+			console.log('Preview URL for reset password: %s', nodemailer.getTestMessageUrl(info));
 			return {message: "EMAIL SENT"};
 		});	
 	});
-	
+	//diogodomene@gmail.com
 };
