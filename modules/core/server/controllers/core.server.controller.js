@@ -1,6 +1,15 @@
 'use strict';
 
 /**
+ * Render the home application page
+ */
+exports.home = function (req, res) {
+  res.render('modules/core/server/views/index', {
+    user: req.user || null
+  });
+};
+
+/**
  * Render the main application page
  */
 exports.renderIndex = function (req, res) {

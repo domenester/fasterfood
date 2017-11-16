@@ -114,7 +114,6 @@ module.exports.forgot = async (req, res, next) => {
 
 module.exports.resetPassword = async (req, res, next) =>{
   let usersCollection = tingodb.getCollection('users');
-  console.log("IN RESET");
   /** Checks if user exists with token passed */
   await new Promise((resolve, reject) => {
     usersCollection.update(
