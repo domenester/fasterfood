@@ -19,17 +19,17 @@ module.exports.sendLinkForResetPassTo = (email, token, host) => {
 		subject: 'Alterar Senha',
 		text: 'Você está recebendo esse email, por que foi solicitado uma alteração de senha para essa conta.\n\n' +
 			'Clique no link a segui ou cole-o na barra de endereço do seu navagador para completar o processo.:\n\n' +
-			'http://' + host + '/reset/' + token + '\n\n' +
+			'http://' + host + '/reset-pass/' + token + '\n\n' +
 			'Se você não solicitou isso, por favor, ignore esse email que sua senha permanecerá igual.\n'
 		};
 	
-		smtpTransport.sendMail(mailOptions, function(err, info) {
+		return smtpTransport.sendMail(mailOptions, function(err, info) {
 			if (err) {
 				console.log('Error trying send email for forgotten pass.');
 				return err;	
 			}
 			console.log('Preview URL for reset password: %s', nodemailer.getTestMessageUrl(info));
-			return {message: "EMAIL SENT"};
+			return true;
 		});	
 	});
 	//diogodomene@gmail.com

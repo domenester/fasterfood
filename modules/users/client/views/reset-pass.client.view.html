@@ -1,0 +1,18 @@
+<section ng-controller="ResetPassController">
+	<div class="login-container">
+			<section id="login-content">
+				<form name="resetPassForm" method="GET" ng-submit="resetPass(resetPassForm, 'POST')">
+					<h1 id="login-title">Alterar Senha</h1>
+
+					<div ng-include src="signFieldsPath"></div>
+					
+					<div class="row">
+						<div class="row">
+							<input class="col-offset-4 col-4 col-offset-4" type="submit" value="Enviar" />							
+						</div>						
+					</div>
+				</form><!-- form -->
+				<div class="button"></div><!-- button -->
+			</section><!-- content -->
+		</div><!-- container -->
+</section>

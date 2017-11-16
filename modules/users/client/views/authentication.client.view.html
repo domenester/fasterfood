@@ -1,9 +1,9 @@
 <section ng-controller="AuthenticationController">
-    <div class="row">
+    <div class="row" ng-hide="isResetPassPage">
         <div ng-show="!isEmailValid" class="invalid-fields-warning">
             Email inválido.
         </div>
-        <input name="email" type="text" ng-model="email" ng-blur="fieldOnBlur('email', this.email)" ng-change="updateLoginFormData('email', this.email)" placeholder="Email" id="email" required />        
+        <input name="email" type="text" ng-model="email" ng-blur="fieldOnBlur('email', this.email)" ng-change="updateLoginFormData('email', this.email)" placeholder="Email" id="email" ng-required="!isResetPassPage" />        
     </div>
     <div class="row" ng-hide="isForgotPassPage">
         <div ng-show="!isPasswordValid" class="invalid-fields-warning">

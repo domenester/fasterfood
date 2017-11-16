@@ -4,6 +4,7 @@ const path = require('path'),
       passport = require(path.resolve('./config/lib/passport')),
       tingodb = require(path.resolve('./config/lib/tingodb')),
       nodemailer = require(path.resolve('./config/lib/nodemailer')),
+      userPassService = require(path.resolve('./config/services/user-pass')),
       crypto = require('crypto'),
       async = require('async');
 
@@ -107,5 +108,34 @@ module.exports.forgot = async (req, res, next) => {
   });
 
   nodemailer.sendLinkForResetPassTo(req.body.email, token, req.headers.host);
+
+  return res.json({message: "Email enviado."});
+};
+
+module.exports.resetPassword = async (req, res, next) =>{
+  let usersCollection = tingodb.getCollection('users');
+  console.log("IN RESET");
+  /** Checks if user exists with token passed */
+  await new Promise((resolve, reject) => {
+    usersCollection.update(
+      { 'resetPasswordToken': req.body.token }, 
+      { $set: {password: userPassService.generateHash(req.body.password)} },
+      function(err, user) {
+      
+      if (err) {
+        console.log("Error finding user to reset password for token: " + req.body.token);
+        return res.status(500).json(err);
+      }
+
+      if (!user) {
+        console.log("User not found with token: " + req.body.token);
+        return res.status(500).json({message: "Token inválido"});
+      }
+      resolve(true);
+    });
+  });
+
+  return res.json({message: "Senha alterada com sucesso."});
+
 };
 //diogodomene@gmail.com

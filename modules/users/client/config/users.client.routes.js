@@ -27,6 +27,11 @@ angular.module('users').config(['$stateProvider', '$urlRouterProvider',
         url: '/forgot-pass',
         templateUrl: 'modules/users/client/views/forgot-pass.client.view.html',
 		    controller: 'ForgotPassController'
+      })
+      .state('reset-pass', {
+        url: '/reset-pass/:token',
+        templateUrl: 'modules/users/client/views/reset-pass.client.view.html',
+		    controller: 'ResetPassController'
       });
   }
 ]);

@@ -29,6 +29,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', 'AuthF
       }
     };    
 
+    $scope.isResetPassPage  = ( $location.path().indexOf('reset-pass') > 0 ? true : false );
     $scope.isForgotPassPage = ( $location.path().indexOf('forgot-pass') > 0 ? true : false );
 
     $scope.sign = (signForm, verb, location) => {
