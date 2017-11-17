@@ -2,6 +2,8 @@
 
 // Root routing
 var core = require('../controllers/core.server.controller');
+const path = require('path');
+const userAuth = require(path.resolve('./config/services/user-auth'));
 
 module.exports = function (app) {
   // Define error pages
@@ -13,5 +15,5 @@ module.exports = function (app) {
   // Define application route
   app.route('/*').get(core.renderIndex);
 
-  app.route('/').get(core.home);
+  app.get('/', userAuth.isAuthenticated, core.home);
 };

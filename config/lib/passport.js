@@ -10,7 +10,7 @@ const authService = require('../../public/services/authentication');
 
 // used to serialize the user for the session
 passport.serializeUser(function(user, done) {
-	done(null, user);
+	done(null, user.id);
 });
 
 // used to deserialize the user
