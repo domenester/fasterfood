@@ -26,6 +26,8 @@ module.exports.initLocalVariables = function (app) {
   app.use(function (req, res, next) {
     res.locals.host = req.protocol + '://' + req.hostname;
     res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    console.log('User Init Variable: ' + req.user);
+    res.locals.user = req.user;
     next();
   });
 };
@@ -62,6 +64,13 @@ module.exports.initMiddleware = function (app) {
   app.use(cookieParser());
   app.use(flash());
 
+  app.use(session({ 
+    secret: 'mySecret',
+    cookie: { maxAge: 60000 },
+    rolling: true,
+    resave: true, 
+    saveUninitialized: false
+  }));
   app.use(passport.initialize());
   app.use(passport.session()); // persistent login sessions
 };

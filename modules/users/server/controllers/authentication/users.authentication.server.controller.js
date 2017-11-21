@@ -14,10 +14,10 @@ const forceLogin = (req, res, user) => {
   req.login(user, function(err) {
     if (err) {
       console.log("passport.authenticate - req.login - error: " + err );
-      return res.status(500).json(err);
+      return res.status(500).json({ message: "Falha ao logar" });
     } else {
       console.log("passport.authenticate - req.login - User logged in: " + req.user.email);
-      return res.json(req.user);
+      return res.json({ user: req.user });
     }        
   });
 };
@@ -44,7 +44,7 @@ module.exports.signup = (req, res, next) => {
 module.exports.signin = (req, res, next) => { 
   passport.authenticate('signin', {
     failureRedirect: '/sign-in',
-    failureFlash : true
+    session: true,
   }, function(err, user, info) {      
       if (err) {
         console.log("passport.authenticate - error: " + err );
@@ -137,4 +137,3 @@ module.exports.resetPassword = async (req, res, next) =>{
   return res.json({message: "Senha alterada com sucesso."});
 
 };
-//diogodomene@gmail.com

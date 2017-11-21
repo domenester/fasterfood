@@ -9,13 +9,15 @@ const userPassService = require('../services/user-pass');
 const authService = require('../../public/services/authentication');
 
 // used to serialize the user for the session
-passport.serializeUser(function(user, done) {
-	done(null, user.id);
+passport.serializeUser( (user, done) => {
+	console.log('User serialized: ' + user.email);
+	done(null, user.email);
 });
 
 // used to deserialize the user
-passport.deserializeUser(function(id, done) {
-	usersCollection.findById(id, function(err, user) {
+passport.deserializeUser( (email, done) => {
+	usersCollection.findOne( {'email': email} , function(err, user) {
+		console.log('User deserialized: ' + user.email);
 		done(err, user);
 	});
 });

@@ -14,6 +14,4 @@ module.exports = function (app) {
 
   // Define application route
   app.route('/*').get(core.renderIndex);
-
-  app.get('/', userAuth.isAuthenticated, core.home);
 };
