@@ -2,8 +2,8 @@
 
 //let clientAuthService = require('../../../../public/services/authentication');
 
-angular.module('users').controller('AuthenticationController', ['$scope', 'AuthFormPersist', '$http', '$location', 'Alerts', 
-  function ($scope, AuthFormPersist, $http, $location, Alerts) {
+angular.module('users').controller('AuthenticationController', ['$scope', 'AuthFormPersist', '$http', '$location', 'Alerts', '$window', 
+  function ($scope, AuthFormPersist, $http, $location, Alerts, $window) {
     $scope.rootPath = "modules/users/client/views/";
     $scope.filePath = $scope.rootPath + "authentication.client.view.html";    
 
@@ -50,7 +50,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', 'AuthF
         headers: {'Content-Type': 'application/json'},
         data: user
       }).then( 
-        (msg) => $location.path('/'), 
+        (msg) => {
+          $location.path('/');
+        },
         (msg) => { 
           Alerts.showAndCloseAlert(Alerts.types.danger, msg.data.message);
           console.log("Error: " + JSON.stringify(msg)); 

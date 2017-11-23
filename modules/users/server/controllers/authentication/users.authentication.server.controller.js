@@ -137,3 +137,8 @@ module.exports.resetPassword = async (req, res, next) =>{
   return res.json({message: "Senha alterada com sucesso."});
 
 };
+
+module.exports.getUser = (req, res, next) => {
+  console.log('Returning User: ' + req.user);
+  return req.user || null;
+};
