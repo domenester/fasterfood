@@ -6,7 +6,8 @@
 var _ = require('lodash'),
   chalk = require('chalk'),
   glob = require('glob'),
-  //fs = require('fs'),
+  log = require('electron-log'),
+  fs = require('fs'),
   path = require('path');
 
 const { global } = require('./global');
@@ -92,6 +93,33 @@ var initEnvironmentVariables = () => {
 	process.env.FORCE_COLOR = 1;
 };
 
+var initLogConfig = () => {
+  
+  log.transports.file.level = false;
+  log.transports.console.level = false;
+
+  //log.transports.file.appName = 'faster-food';
+  // Same as for console transport
+  log.transports.file.level = 'warn';
+  log.transports.file.format = '{h}:{i}:{s}:{ms} {text}';
+  
+  // Set approximate maximum log size in bytes. When it exceeds,
+  // the archived log will be saved as the log.old.log file
+  log.transports.file.maxSize = 5 * 1024 * 1024;
+  
+  // Write to this file, must be set before first logging
+  console.log('log.transports.file.file: ' + global.path.userData + '\\log.txt');
+  log.transports.file.file = global.path.userData + '\\log.txt';
+  
+  // fs.createWriteStream options, must be set before first logging
+  // you can find more information at
+  // https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options
+  log.transports.file.streamConfig = { flags: 'w' };
+  
+  // set existed file stream
+  log.transports.file.stream = fs.createWriteStream('log.txt');
+};
+
 var initGlobalConfig = () => {
 	// Get the default assets
   var assets = require(path.join( global.path.root, '/config/assets/default'));
@@ -103,6 +131,8 @@ var initGlobalConfig = () => {
   initGlobalConfigFolders(config, assets);
 
   initEnvironmentVariables();
+
+  initLogConfig();
 
   console.log('config file: '+JSON.stringify(config));
 

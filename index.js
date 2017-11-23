@@ -9,6 +9,7 @@ const url = require('url');
 const fs = require('fs');
 const config = require('./config/config');
 var server = require('./server');
+let log = require('electron-log');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

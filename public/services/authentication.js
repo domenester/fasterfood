@@ -7,6 +7,7 @@ const authService = {
         return EMAIL_REGEXP.test(email);
     },
     isPasswordValid: (password) => {
+        //TODO: Use an API for password validation
         return password.length >= 8 ;
     }
     
