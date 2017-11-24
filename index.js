@@ -29,14 +29,17 @@ function createWindow () {
     width: 800, 
     height: 600,
     minHeight: 320,
-    minWidth: 320
+    minWidth: 320,
+    webPreferences: {
+      partition: 'persist:xxx'
+    }
   });
 
   /** Disable the menu bar */
   //win.setMenu(null);
 
   //Starting the server, then loads the localhost;
-  win.loadURL('http://localhost:3001/sign-in');
+  win.loadURL('http://localhost:3001/');
 
   // Emitted when the window is closed.
   win.on('closed', () => {

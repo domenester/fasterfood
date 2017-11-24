@@ -1,17 +1,17 @@
 'use strict';
 
 // Authentication service for user variables
-angular.module('users').service('Authentication', ['$window', '$http',
-  function ($window, $http) {
-    //return { user: false };
+angular.module('users').service('Authentication', ['$cookies', 
+  function ($cookies){
+    
+    let user = $cookies.get('user');
 
-    let user = $http.get('/user').then( 
-      (user) => {
-        console.log('userPROMISSE: '+JSON.stringify(user));
-        return { user: user };
-      }
-    );
+    this.get = () => {
+      return user;
+    };
 
-    return user;
+    this.set = (user) => {
+      $cookies.put('user', user);
+    };
   }
 ]);

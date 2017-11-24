@@ -2,8 +2,8 @@
 
 //let clientAuthService = require('../../../../public/services/authentication');
 
-angular.module('users').controller('AuthenticationController', ['$scope', 'AuthFormPersist', '$http', '$location', 'Alerts', '$window', 
-  function ($scope, AuthFormPersist, $http, $location, Alerts, $window) {
+angular.module('users').controller('AuthenticationController', ['$scope', 'AuthFormPersist', '$http', '$location', 'Alerts', 'Authentication', 
+  function ($scope, AuthFormPersist, $http, $location, Alerts, Authentication) {
     $scope.rootPath = "modules/users/client/views/";
     $scope.filePath = $scope.rootPath + "authentication.client.view.html";    
 
@@ -51,6 +51,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', 'AuthF
         data: user
       }).then( 
         (msg) => {
+          console.log('Logged in successfuly: ' + JSON.stringify(msg));
+          Authentication.set(msg.data.user);
           $location.path('/');
         },
         (msg) => { 
