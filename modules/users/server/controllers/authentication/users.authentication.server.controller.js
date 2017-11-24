@@ -138,6 +138,12 @@ module.exports.resetPassword = async (req, res, next) =>{
 
 };
 
+module.exports.signout = (req, res, next) => {
+  console.log("IN SIGNOUT");
+  req.logout();
+  res.json({ message: true });
+};
+
 module.exports.getUser = (req, res, next) => {
   console.log('Returning User: ' + req.user);
   return req.user || null;

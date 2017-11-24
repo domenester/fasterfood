@@ -1,3 +1,4 @@
-<section ng-controller="HomeController" ng-show="authentication !== null">
+<section ng-controller="HomeController" ng-show="authentication.length">
   HOME
+  <a ng-click="signout()">Log out</a>
 </section>

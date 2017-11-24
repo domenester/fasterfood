@@ -31,7 +31,7 @@ function createWindow () {
     minHeight: 320,
     minWidth: 320,
     webPreferences: {
-      partition: 'persist:xxx'
+      partition: 'persist:anysession'
     }
   });
 

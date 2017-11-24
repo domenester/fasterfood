@@ -52,7 +52,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', 'AuthF
       }).then( 
         (msg) => {
           console.log('Logged in successfuly: ' + JSON.stringify(msg));
-          Authentication.set(msg.data.user);
+          AuthFormPersist.reset();
+          Authentication.set(msg.data.user.email);
           $location.path('/');
         },
         (msg) => { 
