@@ -7,5 +7,7 @@
     "ApplicationConfiguration": true
   },
   "esversion": 6, //Accept the new syntax (const, let, arrows...)
-  "devel": true // Allow development statements e.g. `console.log();`.
+  "devel": true, // Allow development statements e.g. `console.log();`.
+  "undef": true,
+  "unused": true
 }

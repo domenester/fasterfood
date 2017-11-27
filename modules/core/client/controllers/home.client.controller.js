@@ -12,11 +12,34 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
       });      
     };
 
+    // let userData = (function * (){
+    //   session.cookies.get({ name: "user" }, function(error, cookies) {
+    //     if (cookies[0]) yield cookies[0].value;      
+    //   });
+    // })(); 
+    // Promise.resolve(
+    //   new Promise((resolve, reject) => {
+    //     session.cookies.get({ name: "user" }, function(error, cookies) {
+    //       if (cookies[0]) resolve(cookies[0].value);
+    //       else reject('User not found in cookies');
+    //     });
+    //   })
+    // );
+
+    // session.cookies.get({ name: "user" }, function(error, cookies) {
+    //   if (cookies[0]) userData = cookies[0].value;
+    //   else userData = false;
+    // });
+
+    console.log('userData: ' + userData);
+
     new Promise((resolve, reject) => {
       session.cookies.get({ name: "user" }, function(error, cookies) {
-        resolve(cookies[0].value);
+        if (cookies[0]) resolve(cookies[0].value);
+        else reject('User not found in cookies');
       });
-    }).then( (user) => {
+    }).then( 
+    (user) => {
       $scope.authentication = user;
       console.log('User auth home: ' + $scope.authentication);
       if ( !$scope.authentication ) {
@@ -24,8 +47,9 @@ angular.module('core').controller('HomeController', ['$scope', 'Authentication',
       }
       //This provides Authentication context.
       $scope.data = "Home controller data";
-    });
-    
-    
+    },
+    (err) => {
+      $location.path('/sign-in');
+    });    
   }
 ]);

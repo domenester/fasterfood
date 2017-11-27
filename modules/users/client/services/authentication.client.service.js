@@ -7,19 +7,19 @@ angular.module('users').service('Authentication', function (){
     let user;
     
     ses.cookies.get({ name: "user" }, function(error, cookies) {
-      user = cookies[0].value; // the value saved on the cookie
+      if (cookies[0]) user = cookies[0].value;      
     });
 
     this.get = () => {
       //return user;
       ses.cookies.get({ name: "user" }, function(error, cookies) {
-          user = cookies[0].value; 
+        if (cookies[0]) user = cookies[0].value;
           return user;
       });
     };
 
-    this.set = (user) => {
-      console.log('Setting cookies with user: ' + JSON.stringify(user));
+    this.set = (userData) => {
+      console.log('Setting cookies with user: ' + JSON.stringify(userData));
       let expiration = new Date();
       let hour = expiration.getHours();
       expiration.setHours(hour + 6);
@@ -27,7 +27,7 @@ angular.module('users').service('Authentication', function (){
       ses.cookies.set({
           url: "http://localhost:3001/",
           name: "user",
-          value: user,
+          value: userData,
           expirationDate: expiration.getTime()
       }, function(error) {
           console.log(error);
