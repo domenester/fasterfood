@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-angular.module('users').service('AuthFormPersist', function () {
+angular.module("users").service("AuthFormPersist", function () {
 	let datas = {
-		email: '',
-		password: ''
+		email: "",
+		password: ""
 	};
 
 	this.get = function (field) {
@@ -12,11 +12,11 @@ angular.module('users').service('AuthFormPersist', function () {
 
 	this.set = function (field, value) {
 		datas[field] = value;
-	}
+	};
 
 	this.reset = function () {
 		for(let key in datas) {
-		if (datas.hasOwnProperty(key)) datas[key] = '';     
+			if (datas.hasOwnProperty(key)) datas[key] = "";     
 		}
-	}
+	};
 });

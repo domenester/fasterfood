@@ -1,27 +1,25 @@
-'use strict';
+"use strict";
 
-var tingoDb = require('tingodb');
-var config = require('../config');
-const {app} = require('electron');
-const chalk = require('chalk');
-const electron = app;
+let tingoDb = require("tingodb"),
+	config = require("../config"),
+	chalk = require("chalk");
 
 var tingodb = tingoDb().Db;
 
 // Initialize Mongoose
 module.exports.getCollection = (name) => {
-  var tingo = new tingodb(config.db.connectionPath, {});
-  return tingo.collection(config.db.path + "/" + name, function (err) {
-    // Log Error
-    if (err) {
-      console.error(chalk.red('Could not connect to TingoDB!'));
-      console.log(err);
-    } else {
-      // Call callback FN
-      console.log(chalk.green('Connected to collection: ') + name);
-    }
-  });
-}
+	var tingo = new tingodb(config.db.connectionPath, {});
+	return tingo.collection(config.db.path + "/" + name, function (err) {
+	// Log Error
+		if (err) {
+			console.error(chalk.red("Could not connect to TingoDB!"));
+			console.log(err);
+		} else {
+		// Call callback FN
+			console.log(chalk.green("Connected to collection: ") + name);
+		}
+	});
+};
 
 // module.exports.crud = {
 //   insert: (collection, data, options) => {
@@ -40,7 +38,7 @@ module.exports.getCollection = (name) => {
 // };
 // module.exports.disconnect = function (cb) {
 //   tingodb.disconnect(function (err) {
-//     console.info(chalk.yellow('Disconnected from MongoDB.'));
+//     console.info(chalk.yellow("Disconnected from MongoDB."));
 //     cb(err);
 //   });
 // };
