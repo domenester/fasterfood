@@ -3,7 +3,8 @@
 const { app } = require("electron");
 console.log("Global rooth path: " + app.getAppPath());
 console.log("Global userData path: " + app.getPath("userData"));
-const global = {
+
+module.exports = {
 	path: {
 		//Root path of this application
 		root: app.getAppPath(),
@@ -11,5 +12,3 @@ const global = {
 		userData: app.getPath("userData")
 	}
 };
-
-module.exports.global = global;

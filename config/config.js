@@ -4,19 +4,18 @@
  * Module dependencies.
  */
 let _ = require("lodash"),
-	chalk = require("chalk"),
 	glob = require("glob"),
 	log = require("electron-log"),
 	fs = require("fs"),
-	path = require("path");
-
-const { global } = require("./global");
+	path = require("path"),
+	global = require("./global");
 
 /**
  * Get files by glob patterns
  */
 var getGlobbedPaths = function (globPatterns, excludes) {
 	// URL paths regex
+	//eslint-disable-next-line no-useless-escape
 	var urlRegex = new RegExp("^(?:[a-z]+:)?\/\/", "i");
 
 	// The output array

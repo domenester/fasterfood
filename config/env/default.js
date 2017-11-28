@@ -1,6 +1,6 @@
 "use strict";
 
-const { global } = require("../global");
+let global = require("../global");
 const path = "db";
 module.exports = {
 	app: {

@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports.authService = {
+module.exports = {
 
 	isEmailValid: (email) => {
 		//eslint-disable-next-line no-useless-escape
