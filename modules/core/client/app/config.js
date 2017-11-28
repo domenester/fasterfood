@@ -1,6 +1,9 @@
 "use strict";
 // Init the application configuration module for AngularJS application
+
+//eslint-disable-next-line no-unused-vars
 let ApplicationConfiguration = (function () {
+	
 	// Init module configuration options
 	var applicationModuleName = "mean";
 	var applicationModuleVendorDependencies = ["ui.router"];

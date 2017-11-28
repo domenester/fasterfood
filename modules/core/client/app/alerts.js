@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("core").service("Alerts", ["jQuery", function ($) {
+angular.module("core").service("Alerts", function () {
 	return {
 		types: {
 			danger: "alert alert-danger",
@@ -16,4 +16,4 @@ angular.module("core").service("Alerts", ["jQuery", function ($) {
 			alertElement.delay(3000).slideUp(200);
 		},
 	};
-}]);
+});

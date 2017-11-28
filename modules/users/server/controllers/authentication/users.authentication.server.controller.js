@@ -66,7 +66,7 @@ module.exports.forgot = async (req, res) => {
 	let usersCollection = tingodb.getCollection("users");
 
 	/** Checks if user exists with email passed */
-	await new Promise((resolve, reject) => {
+	await new Promise((resolve) => {
 		usersCollection.findOne({ "email": req.body.email }, function(err, user) {
 
 			if (err) {
@@ -94,7 +94,7 @@ module.exports.forgot = async (req, res) => {
 	let dateExpiration = Date.now() + 3600000;
 
 	/** Update the user with the token and date expiration */
-	await new Promise((resolve, reject) => {
+	await new Promise((resolve) => {
 		usersCollection.update( 
 			{"email": req.body.email}, 
 			{ $set: {resetPasswordToken: token, resetPasswordExpires: dateExpiration } },
@@ -115,7 +115,7 @@ module.exports.forgot = async (req, res) => {
 module.exports.resetPassword = async (req, res) =>{
 	let usersCollection = tingodb.getCollection("users");
 	/** Checks if user exists with token passed */
-	await new Promise((resolve, reject) => {
+	await new Promise((resolve) => {
 		usersCollection.update(
 			{ "resetPasswordToken": req.body.token }, 
 			{ $set: {password: userPassService.generateHash(req.body.password)} },
@@ -144,7 +144,7 @@ module.exports.signout = (req, res) => {
 	res.json({ message: true });
 };
 
-module.exports.getUser = (req, res, next) => {
+module.exports.getUser = (req) => {
 	console.log("Returning User: " + req.user);
 	return req.user || null;
 };

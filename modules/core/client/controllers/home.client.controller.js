@@ -6,10 +6,14 @@ angular.module("core").controller("HomeController", ["$scope", "Authentication",
 		let session = require("electron").remote.session.fromPartition("persist:anysession");
 
 		$scope.signout = () => {
-			$http.get("/sign-out").then( (data) => {
-				Authentication.set(null);
-				$location.path("/sign-in");
-			});      
+			$http.get("/sign-out").then(
+				() => {
+					Authentication.set(null);
+					$location.path("/sign-in");
+				}, 
+				(err) => {
+					console.log(err);
+				});      
 		};
 
 		// let userData = (function * (){
@@ -49,6 +53,7 @@ angular.module("core").controller("HomeController", ["$scope", "Authentication",
 				$scope.data = "Home controller data";
 			},
 			(err) => {
+				console.log(err);
 				$location.path("/sign-in");
 			});    
 	}

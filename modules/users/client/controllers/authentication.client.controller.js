@@ -4,6 +4,9 @@
 
 angular.module("users").controller("AuthenticationController", ["$scope", "AuthFormPersist", "$http", "$location", "Alerts", "Authentication", 
 	function ($scope, AuthFormPersist, $http, $location, Alerts, Authentication) {
+
+		let authService = require("../../../../public/services/authentication");
+
 		$scope.rootPath = "modules/users/client/views/";
 		$scope.filePath = $scope.rootPath + "authentication.client.view.html";    
 
@@ -17,7 +20,7 @@ angular.module("users").controller("AuthenticationController", ["$scope", "AuthF
 			AuthFormPersist.set(field, value);
 		};
 
-		$scope.fieldOnBlur = (field, value) => {
+		$scope.fieldOnBlur = (field) => {
 			switch (field) {
 			case "email": 
 				$scope.isEmailValid = authService.isEmailValid($scope.email);
@@ -25,7 +28,7 @@ angular.module("users").controller("AuthenticationController", ["$scope", "AuthF
 
 			case "password":
 				$scope.isPasswordValid = authService.isPasswordValid($scope.password);
-				break
+				break;
 			}
 		};    
 
