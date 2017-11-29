@@ -9,8 +9,8 @@ let _ = require("lodash"),
 	logger = require("./lib/logger"),
 	global = require("./global");
 
-//logger.info("Global rooth path: " + global.path.root);
-//logger.info("Global userData path: " + global.path.userData);
+logger.info("Global rooth path: " + global.path.root);
+logger.info("Global userData path: " + global.path.userData);
 
 /**
  * Get files by glob patterns
