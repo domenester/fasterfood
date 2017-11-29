@@ -24,8 +24,7 @@ module.exports = {
 				//"public/lib/angular-bootstrap/ui-bootstrap-tpls.js",
 				//"public/lib/angular-file-upload/angular-file-upload.js",        
 				//"public/lib/owasp-password-strength-test/owasp-password-strength-test.js",
-				"public/lib/angular-cookies/angular-cookies.js",
-				"public/services/*.js"             
+				"public/lib/angular-cookies/angular-cookies.js"	            
 			],
 			tests: ["public/lib/angular-mocks/angular-mocks.js"]
 		},
@@ -42,7 +41,8 @@ module.exports = {
 			"modules/core/client/app/config.js",
 			"modules/core/client/app/init.js",
 			"modules/*/client/*.js",
-			"modules/*/client/**/*.js"
+			"modules/*/client/**/*.js",
+			"public/services/*.js" 
 		],
 		views: ["modules/*/client/views/**/*.html"],
 		templates: ["build/templates.js"]

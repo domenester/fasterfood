@@ -1,8 +1,6 @@
 "use strict";
 
-const { app } = require("electron");
-console.log("Global rooth path: " + app.getAppPath());
-console.log("Global userData path: " + app.getPath("userData"));
+let { app } = require("electron");
 
 module.exports = {
 	path: {

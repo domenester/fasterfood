@@ -5,10 +5,12 @@
  */
 let _ = require("lodash"),
 	glob = require("glob"),
-	log = require("electron-log"),
-	fs = require("fs"),
 	path = require("path"),
+	logger = require("./lib/logger"),
 	global = require("./global");
+
+//logger.info("Global rooth path: " + global.path.root);
+//logger.info("Global userData path: " + global.path.userData);
 
 /**
  * Get files by glob patterns
@@ -59,9 +61,9 @@ var initGlobalConfigFolders = function (config) {
 		server: {},
 		client: {}
 	};
-	console.log("processCwd: " + process.cwd());
-	console.log("appPath: " + global.path.root);
-	console.log("appPathReplace: " + global.path.root.replace(new RegExp(/\\/g), "/"));
+	logger.info("processCwd: " + process.cwd());
+	logger.info("appPath: " + global.path.root);
+	logger.info("appPathReplace: " + global.path.root.replace(new RegExp(/\\/g), "/"));
 	// Setting globbed client paths
 	config.folders.client = getGlobbedPaths( global.path.root + "/modules/*/client/", global.path.root.replace(new RegExp(/\\/g), "/"));
 };
@@ -81,7 +83,7 @@ var initGlobalConfigFiles = (config, assets) => {
 	config.files.client.js = getGlobbedPaths(assets.client.lib.js, "public/").concat(getGlobbedPaths(assets.client.js, ["public/"]));
 	// Setting Globbed css files
 	config.files.client.css = getGlobbedPaths(assets.client.lib.css, "public/").concat(getGlobbedPaths(assets.client.css, ["public/"]));
-	console.log("config.files.client.css: " + JSON.stringify(config.files.client.css));
+	logger.info("config.files.client.css: " + JSON.stringify(config.files.client.css));
 	// Setting Globbed views files
 	config.files.client.views = getGlobbedPaths(assets.client.views, "public/");
 };
@@ -94,29 +96,7 @@ var initEnvironmentVariables = () => {
 
 var initLogConfig = () => {
   
-	log.transports.file.level = false;
-	log.transports.console.level = false;
-
-	//log.transports.file.appName = "faster-food";
-	// Same as for console transport
-	log.transports.file.level = "warn";
-	log.transports.file.format = "{h}:{i}:{s}:{ms} {text}";
-
-	// Set approximate maximum log size in bytes. When it exceeds,
-	// the archived log will be saved as the log.old.log file
-	log.transports.file.maxSize = 5 * 1024 * 1024;
-
-	// Write to this file, must be set before first logging
-	console.log("log.transports.file.file: " + global.path.userData + "\\log.txt");
-	log.transports.file.file = global.path.userData + "\\log.txt";
-
-	// fs.createWriteStream options, must be set before first logging
-	// you can find more information at
-	// https://nodejs.org/api/fs.html#fs_fs_createwritestream_path_options
-	log.transports.file.streamConfig = { flags: "w" };
-
-	// set existed file stream
-	log.transports.file.stream = fs.createWriteStream("log.txt");
+	//bunyan.createLogger({name: "myapp"});
 };
 
 var initGlobalConfig = () => {
@@ -133,7 +113,7 @@ var initGlobalConfig = () => {
 
 	initLogConfig();
 
-	console.log("config file: "+JSON.stringify(config));
+	//logger.info("config file: "+JSON.stringify(config));
 
 	return config;
 };

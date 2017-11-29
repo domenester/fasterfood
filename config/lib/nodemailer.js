@@ -1,5 +1,6 @@
 "use strict";
 const nodemailer = require("nodemailer");
+let logger = require("./logger");
 
 module.exports.sendLinkForResetPassTo = (email, token, host) => {
 	nodemailer.createTestAccount((err, account) => {
@@ -25,10 +26,10 @@ module.exports.sendLinkForResetPassTo = (email, token, host) => {
 	
 		return smtpTransport.sendMail(mailOptions, function(err, info) {
 			if (err) {
-				console.log("Error trying send email for forgotten pass.");
+				logger.info("Error trying send email for forgotten pass.");
 				return err;	
 			}
-			console.log("Preview URL for reset password: %s", nodemailer.getTestMessageUrl(info));
+			logger.info("Preview URL for reset password: %s", nodemailer.getTestMessageUrl(info));
 			return true;
 		});	
 	});

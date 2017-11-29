@@ -10,6 +10,7 @@ let config = require("../config"),
 	passport = require("passport"),
 	flash = require("connect-flash"),
 	session = require("express-session"),
+	logger = require("./logger"),
 	global = require("../global");
 
 /**
@@ -33,9 +34,9 @@ module.exports.initLocalVariables = function (app) {
 /**
  * Invoke modules server configuration
  */
-module.exports.initModulesConfiguration = function (app, db) {
+module.exports.initModulesConfiguration = function (app) {
 	config.files.server.configs.forEach(function (configPath) {
-		require(global.path.root + "/" + configPath)(app, db);
+		require(global.path.root + "/" + configPath)(app);
 	});
 };
 
@@ -89,8 +90,8 @@ module.exports.initModulesClientRoutes = function (app) {
 	// Globbing static routing
 	config.folders.client.forEach(function (staticPath) {
 		let toUse = global.path.root + staticPath.replace(new RegExp(/\//g), "\\");
-		console.log("staticPath : " + staticPath);
-		console.log("globalPath : " + toUse);
+		logger.info("staticPath : " + staticPath);
+		logger.info("globalPath : " + toUse);
 		app.use(staticPath, express.static(toUse));
 	});  
 };
@@ -101,7 +102,7 @@ module.exports.initModulesClientRoutes = function (app) {
 module.exports.initModulesServerRoutes = function (app) {
 	// Globbing routing files
 	config.files.server.routes.forEach(function (routePath) {
-		console.log("routePath: " + global.path.root + "/" + routePath);
+		logger.info("routePath: " + global.path.root + "/" + routePath);
 		require(global.path.root + "/" + routePath)(app);
 	});
 };
@@ -118,7 +119,7 @@ module.exports.initViewEngine = function (app) {
 	app.set("views", "./");
 };
 
-module.exports.init = function (db) {
+module.exports.init = function () {
 	// Initialize express app
 	var app = express();
 
@@ -127,7 +128,7 @@ module.exports.init = function (db) {
 	// Initialize Express middleware
 	this.initMiddleware(app);
 
-	this.initModulesConfiguration(app, db);
+	this.initModulesConfiguration(app);
 
 	this.initViewEngine(app);
 

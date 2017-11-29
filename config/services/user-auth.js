@@ -1,11 +1,13 @@
 "use strict";
 
+let logger = require("../lib/logger");
+
 module.exports.isAuthenticated = function(req,res,next){
 	if(req.user) {
-		//console.log("isAuth user: " + req.user);
+		//logger.info("isAuth user: " + req.user);
 		return next();
 	} else {
-		console.log("User is not authenticated");
+		logger.info("User is not authenticated");
 		return;		
 	}		
-}
+};

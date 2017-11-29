@@ -2,6 +2,7 @@
 
 let tingoDb = require("tingodb"),
 	config = require("../config"),
+	logger = require("./logger"),
 	chalk = require("chalk");
 
 var tingodb = tingoDb().Db;
@@ -13,10 +14,10 @@ module.exports.getCollection = (name) => {
 	// Log Error
 		if (err) {
 			console.error(chalk.red("Could not connect to TingoDB!"));
-			console.log(err);
+			logger.info(err);
 		} else {
 		// Call callback FN
-			console.log(chalk.green("Connected to collection: ") + name);
+			logger.info(chalk.green("Connected to collection: ") + name);
 		}
 	});
 };
@@ -24,13 +25,13 @@ module.exports.getCollection = (name) => {
 // module.exports.crud = {
 //   insert: (collection, data, options) => {
 //     collection.insert( data , options || {}, function(err, result) {
-//       if (err) console.log(err);
+//       if (err) logger.info(err);
 //     });
 //   },
 
 //   findOne: (collection, data) => {
 //     collection.findOne( data, function(err, item){
-//       if (err) console.log(err);
+//       if (err) logger.info(err);
 //       return item;
 //     });
 //   }

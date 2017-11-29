@@ -1,13 +1,11 @@
-'use strict';
+"use strict";
 
-var express = require('./config/lib/express');
-var config = require('./config/config');
-var tingodb = require('./config/lib/tingodb');
-let usersCollection = tingodb.getCollection('users');
-
-let app = express.init(usersCollection);
+let express = require("./config/lib/express"),
+	config = require("./config/config"),
+	logger = require("./config/lib/logger"),
+	app = express.init();
 
 app.listen(config.server.port, () => {
-	// Logging initialization
-	console.log('listening on ' + config.server.port);
+	// Logging initialization	
+	logger.info("listening on " + config.server.port);
 });

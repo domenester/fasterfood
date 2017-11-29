@@ -1,23 +1,24 @@
 
 //https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
-let LocalStrategy = require("passport-local").Strategy;
-let tingodb = require("./tingodb");
-let passport = require("passport");
-let usersCollection = tingodb.getCollection("users");
-const userPassService = require("../services/user-pass");
-const authService = require("../../public/services/authentication");
+let LocalStrategy = require("passport-local").Strategy,
+	tingodb = require("./tingodb"),
+	passport = require("passport"),
+	usersCollection = tingodb.getCollection("users"),
+	userPassService = require("../services/user-pass"),
+	logger = require("./logger"),
+	authValidation = require("../../public/services/validations");
 
-// used to serialize the user for the session
+	// used to serialize the user for the session
 passport.serializeUser( (user, done) => {
-	console.log("User serialized: " + user.email);
+	logger.info("User serialized: " + user.email);
 	done(null, user.email);
 });
 
 // used to deserialize the user
 passport.deserializeUser( (email, done) => {
 	usersCollection.findOne( {"email": email} , function(err, user) {
-		console.log("User deserialized: " + user.email);
+		logger.info("User deserialized: " + user.email);
 		done(err, user);
 	});
 });
@@ -30,19 +31,19 @@ let localStrategyConfig = {
 };
 
 let localStrategySignUp = (req, email, password, done) => {
-	if (authService.isEmailValid(email)) {
+	if (authValidation.isEmailValid(email)) {
 		process.nextTick(function() {
 			// find a user whose email is the same as the forms email
 			// we are checking to see if the user trying to login already exists
 			usersCollection.findOne({ "email" :  email }, function(err, user) {
 				// if there are any errors, return the error
 				if (err) {
-					console.log("Error finding user with datas: " + JSON.stringify(user));
+					logger.info("Error finding user with datas: " + JSON.stringify(user));
 					return done(err);					
 				}
 				// check to see if theres already a user with that email
 				if (user) {
-					console.log("User with email already exists: " + JSON.stringify(user));
+					logger.info("User with email already exists: " + JSON.stringify(user));
 					return done(null, false, {
 						message: "Email já cadastrado.",
 					});
@@ -56,11 +57,11 @@ let localStrategySignUp = (req, email, password, done) => {
 					
 					usersCollection.insert(newUser, function(err) {
 						if (err) {
-							console.log("Error inserting user with datas: " + JSON.stringify(newUser));
+							logger.info("Error inserting user with datas: " + JSON.stringify(newUser));
 							throw err;
 						}
 						else { 
-							console.log("Adding new user: " + JSON.stringify(newUser));
+							logger.info("Adding new user: " + JSON.stringify(newUser));
 							return done(null, newUser, {
 								message: "Email cadastrado com sucesso."
 							});						
@@ -70,7 +71,7 @@ let localStrategySignUp = (req, email, password, done) => {
 			});
 		});
 	} else {
-		console.log("Invalid email: " + email);
+		logger.info("Invalid email: " + email);
 		return done(null, false, {
 			message: "Email inválido."
 		});

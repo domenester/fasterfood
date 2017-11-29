@@ -1,11 +1,9 @@
 "use strict";
 
-//let clientAuthService = require("../../../../public/services/authentication");
+angular.module("users").controller("AuthenticationController", ["$scope", "AuthFormPersist", "$http", "$location", "Alerts", "Authentication", "Validation",
+	function ($scope, AuthFormPersist, $http, $location, Alerts, Authentication, Validation) {
 
-angular.module("users").controller("AuthenticationController", ["$scope", "AuthFormPersist", "$http", "$location", "Alerts", "Authentication", 
-	function ($scope, AuthFormPersist, $http, $location, Alerts, Authentication) {
-
-		let authService = require("../../../../public/services/authentication");
+		let authService = Validation;
 
 		$scope.rootPath = "modules/users/client/views/";
 		$scope.filePath = $scope.rootPath + "authentication.client.view.html";    

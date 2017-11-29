@@ -1,8 +1,8 @@
 "use strict";
-angular.module("users").controller("ResetPassController", ["$scope", "$controller", "$http", "$location", "$stateParams", "Alerts",
-	function ($scope, $controller, $http, $location, $stateParams, Alerts) {
+angular.module("users").controller("ResetPassController", ["$scope", "$controller", "$http", "$location", "$stateParams", "Alerts", "Validation",
+	function ($scope, $controller, $http, $location, $stateParams, Alerts, Validation) {
 
-		let authService = require("../../../../public/services/authentication");
+		let authService = Validation;
 		
 		let authenticationController = $scope.$new();
 		$controller("AuthenticationController", {$scope : authenticationController });
