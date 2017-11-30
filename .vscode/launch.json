@@ -5,6 +5,44 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+            "name": "Electron Built",
+            "type": "node",
+            "request": "launch",
+            "program": "C:\\Users\\diogo.domene\\AppData\\Local\\Temp\\nspFF66.tmp\\app\\resources\\app.asar/index.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": "C:\\Users\\diogo.domene\\AppData\\Local\\Temp\\nspFF66.tmp\\app\\resources\\app.asar/node_modules/.bin/electron.cmd",
+            "runtimeArgs": [
+                ".",
+                "--enable-logging"
+            ],
+            "env": {},
+            "console": "internalConsole",
+            "sourceMaps": false,
+            "outDir": null
+        },
+		{
+            "name": "Electron",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/index.js",
+            "stopOnEntry": false,
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": null,
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+            "runtimeArgs": [
+                ".",
+                "--enable-logging"
+            ],
+            "env": {},
+            "console": "internalConsole",
+            "sourceMaps": false,
+            "outDir": null
+        },
+		{
 			"type": "node",
 			"request": "attach",
 			"name": "Attach",

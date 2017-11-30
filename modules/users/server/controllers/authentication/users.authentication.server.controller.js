@@ -1,14 +1,14 @@
 "use strict";
 
-const path = require("path"),
-	passport = require(path.resolve("./config/lib/passport")),
-	tingodb = require(path.resolve("./config/lib/tingodb")),
-	nodemailer = require(path.resolve("./config/lib/nodemailer")),
-	userPassService = require(path.resolve("./config/services/user-pass")),
+let global = require("../../../../../config/global"),
+	passport = require( global.path.root + "/config/lib/passport"),
+	tingodb = require( global.path.root + "/config/lib/tingodb"),
+	nodemailer = require( global.path.root + "/config/lib/nodemailer"),
+	userPassService = require( global.path.root + "/config/services/user-pass"),
 	crypto = require("crypto");
 	//async = require("async");
 
-console.log( "TINGO PATH: " + path.resolve("./config/lib/tingodb"));
+console.log( "TINGO PATH: " +  global.path.root + "/config/lib/tingodb");
 
 const forceLogin = (req, res, user) => {
 	req.login(user, function(err) {

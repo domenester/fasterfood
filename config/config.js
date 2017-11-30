@@ -32,7 +32,10 @@ var getGlobbedPaths = function (globPatterns, excludes) {
 		if (urlRegex.test(globPatterns)) {
 			output.push(globPatterns);
 		} else {
-			var files = glob.sync(globPatterns);
+			var files = glob.sync(globPatterns, {
+				cwd: global.path.root,
+				root: global.path.root + "\\"
+			});
 			if (excludes) {
 				files = files.map(function (file) {
 					if (_.isArray(excludes)) {
@@ -49,6 +52,7 @@ var getGlobbedPaths = function (globPatterns, excludes) {
 		}
 	}
 
+	//logger.info("globPattern output: " + output);
 	return output;
 };
 
@@ -76,7 +80,9 @@ var initGlobalConfigFiles = (config, assets) => {
 	};
 
 	// Setting Globbed route files
+	logger.info("Routes path before globbing: " + assets.server.routes);
 	config.files.server.routes = getGlobbedPaths(assets.server.routes);
+	logger.info("Routes path after globbing: " + config.files.server.routes);
 	// Setting Globbed config files
 	config.files.server.configs = getGlobbedPaths(assets.server.config);
 	// Setting Globbed js files
@@ -92,6 +98,7 @@ var initGlobalConfigFiles = (config, assets) => {
 var initEnvironmentVariables = () => {
   
 	process.env.FORCE_COLOR = 1;
+	//process.chdir(global.path.root);
 };
 
 var initLogConfig = () => {
@@ -100,6 +107,9 @@ var initLogConfig = () => {
 };
 
 var initGlobalConfig = () => {
+	
+	initEnvironmentVariables();
+
 	// Get the default assets
 	var assets = require(path.join( global.path.root, "/config/assets/default"));
 	// Get the default config
@@ -108,8 +118,6 @@ var initGlobalConfig = () => {
 	initGlobalConfigFiles(config, assets);
 	// Initialize global globbed folders
 	initGlobalConfigFolders(config, assets);
-
-	initEnvironmentVariables();
 
 	initLogConfig();
 

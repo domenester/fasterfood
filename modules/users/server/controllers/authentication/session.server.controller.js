@@ -1,6 +1,6 @@
 let session = require("electron").session.fromPartition("persist:anysession"),
-	path = require("path"),
-	logger = require(path.resolve("./config/lib/logger"));
+	global = require("../../../../../config/global"),
+	logger = require( global.path.root + "/config/lib/logger");
 
 module.exports.delSession = (req, res) => {
 	logger.info("Deleting electron cookies user");

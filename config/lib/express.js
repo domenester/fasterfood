@@ -116,7 +116,7 @@ module.exports.initViewEngine = function (app) {
 
 	// Set views path and view engine
 	app.set("view engine", "server.view.html");
-	app.set("views", "./");
+	app.set("views", global.path.root);
 };
 
 module.exports.init = function () {

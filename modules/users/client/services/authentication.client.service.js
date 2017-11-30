@@ -20,7 +20,7 @@ angular.module("users").service("Authentication", ["$cookies", "$http",
 				/** Initializing user Cookie */
 				$http.get("/session").then(
 					(userData) => {
-						console.log("First Cookie Request for UserData: " + JSON.stringify(userData));
+						console.log("User requested for session: " + JSON.stringify(userData.data.user));
 						$cookies.put("user", userData);
 						return userData;
 					}
