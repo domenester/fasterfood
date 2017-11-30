@@ -10,4 +10,6 @@ module.exports = function (app) {
 	app.post("/reset-pass/:token", user.resetPassword);
 	app.get("/user", user.getUser);
 	app.get("/sign-out", user.signout);
+	app.get("/session", user.getSession);
+	app.put("/session", user.setSession);
 };

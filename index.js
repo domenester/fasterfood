@@ -36,9 +36,10 @@ function createWindow () {
 
 	/** Disable the menu bar */
 	//win.setMenu(null);
-
-	//Starting the server, then loads the localhost;
-	win.loadURL("http://localhost:3001/");
+	server.start( () => {
+		//Starting the server, then loads the localhost;
+		win.loadURL("http://localhost:3001/");
+	});	
 
 	// Emitted when the window is closed.
 	win.on("closed", () => {

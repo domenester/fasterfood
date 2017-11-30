@@ -1,37 +1,35 @@
 "use strict";
 
 // Authentication service for user variables
-angular.module("users").service("Authentication", function (){
-	let session = require("electron").remote.session;
-	let ses = session.fromPartition("persist:anysession");
-	let user;
+angular.module("users").service("Authentication", ["$cookies", "$http", 
+	function ($cookies, $http){
 
-	ses.cookies.get({ name: "user" }, function(error, cookies) {
-		if (cookies[0]) user = cookies[0].value;      
-	});
+		console.log("COOKIES: " + $cookies.get("user"));
 
-	this.get = () => {
-	//return user;
-		ses.cookies.get({ name: "user" }, function(error, cookies) {
-			if (cookies[0]) user = cookies[0].value;
-			return user;
-		});
-	};
+		/** Initializing user Cookie */
+		$http.get("/session").then(
+			(userData) => {
+				console.log("First Cookie Request for UserData: " + JSON.stringify(userData));
+				$cookies.put("user", userData);
+			}
+		);
 
-	this.set = (userData) => {
-		console.log("Setting cookies with user: " + JSON.stringify(userData));
-		let expiration = new Date();
-		let hour = expiration.getHours();
-		expiration.setHours(hour + 6);
+		this.get = () => {
+			console.log("COOKIES GET: " + JSON.stringify($cookies.get("user")));
+			return $cookies.get("user");
+		};
 
-		ses.cookies.set({
-			url: "http://localhost:3001/",
-			name: "user",
-			value: userData,
-			expirationDate: expiration.getTime()
-		}, function(error) {
-			console.log(error);
-		});
-	//$cookies.put("user", user);
-	};
-});
+		this.set = (userData) => {
+			$http.put("/session", {data: userData}).then(
+				() => {
+					let expiration = new Date();
+					let hour = expiration.getHours();
+					expiration.setHours(hour + 6);
+					$cookies.put("user", userData, {
+						expires: expiration
+					});
+				}
+			);		
+		};
+	}
+]);
