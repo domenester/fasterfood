@@ -1,13 +1,13 @@
 "use strict";
 
 angular.module("core").constant("jQuery", window.jQuery);
-angular.module("core").controller("HomeController", ["$scope", "Authentication", "$location", "$http", "$cookies",
-	function ($scope, Authentication, $location, $http, $cookies) {
+angular.module("core").controller("HomeController", ["$scope", "Authentication", "$location", "$http",
+	function ($scope, Authentication, $location, $http) {
 
 		$scope.signout = () => {
 			$http.get("/sign-out").then(
 				() => {
-					Authentication.del(null);
+					Authentication.del();
 					$location.path("/sign-in");
 				}, 
 				(err) => {
@@ -15,7 +15,7 @@ angular.module("core").controller("HomeController", ["$scope", "Authentication",
 				});      
 		};
 
-		$scope.authentication = $cookies.get("user");//Authentication.get();
+		$scope.authentication = Authentication.get();
 		console.log("User auth home: " + $scope.authentication);
 		if ( !$scope.authentication ) {
 			$location.path("/sign-in");
