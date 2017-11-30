@@ -14,6 +14,13 @@ angular.module("users").service("Authentication", ["$cookies", "$http",
 			}
 		);
 
+		this.del = () => {
+			$http.delete("/session").then(
+				() => {
+					$cookies.remove("user", null);
+				}
+			);
+		};
 		this.get = () => {
 			console.log("COOKIES GET: " + JSON.stringify($cookies.get("user")));
 			return $cookies.get("user");

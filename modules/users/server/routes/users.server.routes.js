@@ -12,4 +12,5 @@ module.exports = function (app) {
 	app.get("/sign-out", user.signout);
 	app.get("/session", user.getSession);
 	app.put("/session", user.setSession);
+	app.delete("/session", user.delSession);
 };

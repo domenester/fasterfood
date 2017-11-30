@@ -7,7 +7,7 @@ angular.module("core").controller("HomeController", ["$scope", "Authentication",
 		$scope.signout = () => {
 			$http.get("/sign-out").then(
 				() => {
-					Authentication.set(null);
+					Authentication.del(null);
 					$location.path("/sign-in");
 				}, 
 				(err) => {
