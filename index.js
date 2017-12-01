@@ -8,11 +8,12 @@ const { app, BrowserWindow } = require("electron");
 let server = require("./server"),
 	fs = require("fs"),
 	logger = require("./config/lib/logger"),
+	global = require("./config/global"),
 	config = require("./config/config");
 
 // Keep a global reference of the window object, if you don"t, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win;
+let main, splashScreen;
 
 function createDbFolderIfDontExist( ) {
 	if (!fs.existsSync(config.db.location)){
@@ -21,39 +22,70 @@ function createDbFolderIfDontExist( ) {
 	}
 }
 
-function createWindow () {
-	createDbFolderIfDontExist();
+function startApplication () {
+	
+	createDbFolderIfDontExist();	
+
+	splashScreen = new BrowserWindow({
+		width: 500, 
+		height: 300,
+		frame: false,
+		resizable: false,
+		movable: false,
+		show: false
+	});
+
+	splashScreen.setMenu(null);
+
 	// Create the browser window.
-	win = new BrowserWindow({
+	main = new BrowserWindow({
 		width: 800, 
 		height: 600,
 		minHeight: 320,
 		minWidth: 320,
+		show: false,
 		webPreferences: {
 			partition: "persist:anysession"
 		}
 	});
 
 	/** Disable the menu bar */
-	//win.setMenu(null);
-	server.start( () => {
+	main.setMenu(null);
+	
+	splashScreen.once("show", () => {		
+		
 		//Starting the server, then loads the localhost;
-		win.loadURL("http://localhost:3001/");
+		main.loadURL("http://localhost:3001/");
+		main.webContents.on("did-finish-load", function() {
+			main.show();
+			splashScreen.close();
+		});
+	});
+	
+	server.start( () => {
+		splashScreen.loadURL("file://" + global.path.root + "/splash.html");
+		splashScreen.webContents.on("did-finish-load", function() {
+			splashScreen.show();
+		});				
 	});	
 
 	// Emitted when the window is closed.
-	win.on("closed", () => {
+	main.on("closed", () => {
 		// Dereference the window object, usually you would store windows
 		// in an array if your app supports multi windows, this is the time
 		// when you should delete the corresponding element.
-		win = null;
+		main = null;
+	});
+
+	splashScreen.on("closed", () => {
+		splashScreen = null;
 	});
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", startApplication);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
@@ -67,7 +99,7 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
 	// On macOS it"s common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
-	if (win === null) {
-		createWindow();
+	if (main === null) {
+		startApplication();
 	}
 });
