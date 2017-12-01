@@ -1,5 +1,19 @@
 "use strict";
 
+//handle setupevents as quickly as possible
+const setupEvents = require("./installers/setupEvents");
+if (setupEvents.handleSquirrelEvent()) {
+	// squirrel event handled and app will exit in 1000ms, so don't do anything else
+	//eslint-disable-next-line
+	return;
+}
+
+// const electron = require('electron')
+// // Module to control application life.
+// const app = electron.app
+// const {ipcMain} = require('electron')
+// var path = require('path')
+
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -50,7 +64,7 @@ function startApplication () {
 	});
 
 	/** Disable the menu bar */
-	main.setMenu(null);
+	//main.setMenu(null);
 	
 	splashScreen.once("show", () => {		
 		

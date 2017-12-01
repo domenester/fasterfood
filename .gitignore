@@ -1,5 +1,4 @@
 node_modules
-out
 dist
 public/lib/*
-trash
+release-builds
